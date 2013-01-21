@@ -31,33 +31,30 @@ $insertionSort->sort();
                 <?php foreach ($elements as $index => $element): ?>
                     <div style = "
                          color: gray;
-                    <?php if (isset($changedElements[$index])): ?>
-                              border-right: 4px groove red;
-                              padding-right: 8px;
-                              margin-right: 2px;
-                          <?php endif; ?>
-
-                              ">
-                                                <?php if ($index == $snapshot['index']): ?>
-                        &gt;
-                              <?php endif; ?>
-                            <div style="
-                                 display:inline-block;
-                                 margin-top: 3px;
-                                 margin-bottom: 3px;
-                                 text-align: center;
-                                 height: 20px;
-                                 width: 50px;
-                                 border: 4px groove hsl(<?= $element ?>, 100%, 75%);
-                                 border-radius: 5px;
-                                 background: hsl(<?= $element ?>, 50%, 75%);
-                                 color: hsl(<?= $element ?>, 80%, 30%);
-                                 ">
-                                <?php echo $element; ?>
-                            </div>
-                            </div>
-                        <?php endforeach; ?>
+                         <?php if (isset($changedElements[$index])): ?>
+                             border-right: 4px groove red;
+                             padding-right: 2px;
+                             margin-right: 2px;
+                         <?php endif; ?>
+                         ">
+                        <?php if ($index == $snapshot['index']): ?>&#x21aa;<?php endif; ?>
+                        <div style="
+                             display:inline-block;
+                             margin-top: 3px;
+                             margin-bottom: 3px;
+                             text-align: center;
+                             height: 20px;
+                             width: 50px;
+                             border: 4px groove hsl(<?= $element ?>, 100%, 75%);
+                             border-radius: 5px;
+                             background: hsl(<?= $element ?>, 50%, 75%);
+                             color: hsl(<?= $element ?>, 80%, 30%);
+                             ">
+                            <?php echo $element; ?>
                         </div>
-                    <?php endforeach; ?>
-                    </body>
-                    </html>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endforeach; ?>
+    </body>
+</html>
