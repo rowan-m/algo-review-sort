@@ -32,9 +32,9 @@ class InsertionSort implements Algorithm, Observable
                 $this->positionToInsert--;
                 $this->notifyObservers();
             }
-
-            $this->notifyObservers();
         }
+
+        $this->notifyObservers();
     }
 
     public function getElements()

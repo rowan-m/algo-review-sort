@@ -37,7 +37,7 @@ $insertionSort->sort();
                              margin-right: 2px;
                          <?php endif; ?>
                          ">
-                        <?php if ($index == $snapshot['index']): ?>&#x21aa;<?php endif; ?>
+                        <?php if ($index == $snapshot['index']): ?>&#x21aa;<?php elseif (isset($changedElements[$index])): ?>&#x21f5<?php endif; ?>
                         <div style="
                              display:inline-block;
                              margin-top: 3px;
