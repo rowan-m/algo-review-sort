@@ -2,8 +2,10 @@
 
 $app = new Silex\Application();
 
+$app['debug'] = true;
+
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
-    'twig.path' => __DIR__.'/views',
+    'twig.path' => __DIR__ . '/views',
 ));
 
 $app->get('/sort/{algorithm}', function ($algorithm) use ($app) {
@@ -14,12 +16,14 @@ $app->get('/sort/{algorithm}', function ($algorithm) use ($app) {
         $elements[$index] = mt_rand(0, 360);
     }
 
-    $snaphots = new Sorting\IterationSnapshots();
+    $snapshots = new Sorting\IterationSnapshots();
     $algorithm = new Sorting\QuickSort($elements);
-    $algorithm->addObserver($snaphots);
+    $algorithm->addObserver($snapshots);
     $algorithm->sort();
 
-    return 'Sorted';
+    return $app['twig']->render('horizontal.html.twig', array(
+        'snapshots' => $snapshots,
+    ));
 });
 
 return $app;

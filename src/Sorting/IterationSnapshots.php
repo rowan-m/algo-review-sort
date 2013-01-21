@@ -8,8 +8,16 @@ class IterationSnapshots implements Observer, \IteratorAggregate
 
     public function notify(Observable $sort)
     {
+        $elements = $sort->getElements();
+        $diff = array();
+
+        if ($previous = end($this->iterations)) {
+            $diff = array_diff_assoc($previous['elements'], $elements);
+        }
+
         $this->iterations[] = array(
-            'elements' => $sort->getElements(),
+            'elements' => $elements,
+            'diff' => $diff,
             'indices' => $sort->getIndices(),
         );
     }

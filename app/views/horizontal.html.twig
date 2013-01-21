@@ -1,0 +1,72 @@
+<html>
+    <head>
+        <style>
+                .snapshot {
+                    position: relative;
+                    display:inline-block;
+                    width:95px;
+                    padding: 3px;
+                    margin: 3px;
+                    border: 1px gray dotted;
+                    text-align: right;
+                }
+                .iteration {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    padding: 1px;
+                    font-size: small;
+                    color: dimgrey;
+                    background: lightgray;
+                }
+                .index {}
+                .index.primary {
+                    color: dimgray;
+                    font-weight: bolder;
+                }
+                .index.secondary {
+                    color: gray;
+                }
+                .element {
+                    display:inline-block;
+                    margin-top: 3px;
+                    margin-bottom: 3px;
+                    text-align: center;
+                    height: 20px;
+                    width: 50px;
+                    border-radius: 5px;
+                    border: 4px groove;
+                }
+                .diff {
+                    color: red;
+                    font-weight: bold;
+                }
+        </style>
+    </head>
+    <body>
+        {% for snapshot in snapshots %}
+            <div class = "snapshot">
+                <span class="iteration">{{ loop.index }}</span>
+                {% for element in snapshot.elements %}
+                    <div >
+                        <span class="index
+                            {% if loop.index0 == snapshot.indices.0 %}
+                                primary
+                            {% else %}
+                                secondary
+                            {% endif %}"
+                        >
+                            {% if loop.index0 in snapshot.indices %}&#x21aa;{% endif %}
+                        </span>
+                        <span class="element"
+                            style="border-color: hsl({{ element }}, 100%, 75%);
+                                background: hsl({{ element }}, 50%, 75%);
+                                color: hsl({{ element }}, 80%, 30%);"
+                        >{{ element }}</span>
+                        <span class="diff">{% if snapshot.diff[loop.index0] is defined %}&#x21c5;{% endif %}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </body>
+</html>
