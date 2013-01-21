@@ -10,5 +10,5 @@ interface Observable
 
     public function getElements();
 
-    public function getIndex();
+    public function getIndices();
 }

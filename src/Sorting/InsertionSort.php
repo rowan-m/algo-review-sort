@@ -42,8 +42,8 @@ class InsertionSort implements Algorithm, Observable
         return $this->elements;
     }
 
-    public function getIndex()
+    public function getIndices()
     {
-        return $this->positionToInsert;
+        return array($this->positionToInsert);
     }
 }

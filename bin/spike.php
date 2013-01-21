@@ -12,9 +12,10 @@ for ($index = 0; $index < $total; $index++) {
 //shuffle($elements);
 
 $snaphots = new Sorting\IterationSnapshots();
-$insertionSort = new Sorting\InsertionSort($elements);
-$insertionSort->addObserver($snaphots);
-$insertionSort->sort();
+$algorithm = new Sorting\QuickSort($elements);
+//$algorithm = new Sorting\InsertionSort($elements);
+$algorithm->addObserver($snaphots);
+$algorithm->sort();
 ?>
 <html>
     <body>
@@ -22,22 +23,16 @@ $insertionSort->sort();
         rewind($snapshots);
         $previous = current($snapshots);
 
-        foreach ($snaphots as $snapshot):
+        foreach ($snaphots as $iteration => $snapshot):
             $elements = $snapshot['elements'];
             $changedElements = array_diff_assoc($previous, $elements);
             $previous = $elements;
             ?>
-            <div style="display:inline-block; padding: 3px; border: 1px gray dotted;">
+            <div style="position: relative; display:inline-block; width:95px; padding: 3px; margin: 3px; border: 1px gray dotted; text-align: right;">
+                <span style="position: absolute; bottom: 0; left: 0; padding: 1px; font-size: small; color: dimgrey; background: lightgray"><?= $iteration ?></span>
                 <?php foreach ($elements as $index => $element): ?>
-                    <div style = "
-                         color: gray;
-                         <?php if (isset($changedElements[$index])): ?>
-                             border-right: 4px groove red;
-                             padding-right: 2px;
-                             margin-right: 2px;
-                         <?php endif; ?>
-                         ">
-                        <?php if ($index == $snapshot['index']): ?>&#x21aa;<?php elseif (isset($changedElements[$index])): ?>&#x21f5<?php endif; ?>
+                    <div>
+                        <span style="<?php if ($index == reset($snapshot['indices'])): ?>color: dimgray; font-weight: bold;<?php else: ?>color: gray; <?php endif; ?>"><?php if (in_array($index, $snapshot['indices'])): ?>&#x21aa;<?php endif; ?></span>
                         <div style="
                              display:inline-block;
                              margin-top: 3px;
@@ -50,8 +45,9 @@ $insertionSort->sort();
                              background: hsl(<?= $element ?>, 50%, 75%);
                              color: hsl(<?= $element ?>, 80%, 30%);
                              ">
-                            <?php echo $element; ?>
+                             <?php echo $element; ?>
                         </div>
+                        <span style="color: red; font-weight: bold;"><?php if (isset($changedElements[$index])): ?>&#x21f5<?php endif; ?></span>
                     </div>
                 <?php endforeach; ?>
             </div>
