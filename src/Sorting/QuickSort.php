@@ -8,10 +8,10 @@ class QuickSort implements Algorithm, Observable
 
     public function sort(array $elements)
     {
-        $this->quickSort(0, count($elements) - 1);
+        $this->doQuickSort($elements, 0, count($elements) - 1);
     }
 
-    function quickSort($leftIndex, $rightIndex)
+    function doQuickSort($elements, $leftIndex, $rightIndex)
     {
         $pivotIndex = ceil($leftIndex + (($rightIndex - $leftIndex) / 2));
         $pivotElement = $elements[$pivotIndex];
@@ -40,11 +40,11 @@ class QuickSort implements Algorithm, Observable
         }
 
         if ($leftIndex < $rightSwapIndex) {
-            $this->quickSort($leftIndex, $rightSwapIndex);
+            $this->doQuickSort($elements, $leftIndex, $rightSwapIndex);
         }
 
         if ($leftSwapIndex < $rightIndex) {
-            $this->quickSort($leftSwapIndex, $rightIndex);
+            $this->doQuickSort($elements, $leftSwapIndex, $rightIndex);
         }
     }
 }
