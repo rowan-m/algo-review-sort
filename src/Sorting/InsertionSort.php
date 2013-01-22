@@ -11,13 +11,13 @@ class InsertionSort implements Algorithm, Observable
 
     private $positionToInsert;
 
-    public function __construct(array $elements)
+    public function __construct()
     {
-        $this->elements = $elements;
     }
 
-    public function sort()
+    public function sort(array $elements)
     {
+        $this->elements = $elements;
         $iterations = count($this->elements);
         $this->notifyObservers();
 

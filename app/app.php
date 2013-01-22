@@ -24,23 +24,25 @@ $app['elements.random'] = function ($app) {
 
 $app['elements'] = $app['elements.random'];
 
-$app['sort.insertionsort'] = function ($app) {
-    return new Sorting\InsertionSort($app['elements']);
+$app['sort.insertionsort'] = function () {
+    return new Sorting\InsertionSort();
 };
 
-$app['sort.quicksort'] = function ($app) {
-    return new Sorting\InsertionSort($app['elements']);
+$app['sort.quicksort'] = function () {
+    return new Sorting\InsertionSort();
 };
 
-$app['observer.snapshots'] = function($app) {
+$app['sort'] = $app['sort.insertionsort'];
+
+$app['observer.snapshots'] = function() {
     return new Sorting\IterationSnapshots();
 };
 
 $app->get('/sort/{algorithm}', function ($algorithm) use ($app) {
     $snapshots = $app['observer.snapshots'];
-    $algorithm = new Sorting\QuickSort($app['elements']);
+    $algorithm = $app['sort'];
     $algorithm->addObserver($snapshots);
-    $algorithm->sort();
+    $algorithm->sort($app['elements']);
 
     return $app['twig']->render('horizontal.html.twig', array(
         'snapshots' => $snapshots,

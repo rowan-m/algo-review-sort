@@ -4,5 +4,5 @@ namespace Sorting;
 
 interface Algorithm
 {
-    public function sort();
+    public function sort(array $elements);
 }

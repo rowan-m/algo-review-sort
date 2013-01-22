@@ -4,7 +4,6 @@ namespace Sorting;
 
 class QuickSort implements Algorithm, Observable
 {
-
     use ObservableTrait;
 
     private $elements;
@@ -17,13 +16,13 @@ class QuickSort implements Algorithm, Observable
 
     private $indices = array();
 
-    public function __construct(array $elements)
+    public function __construct()
     {
-        $this->elements = $elements;
     }
 
-    public function sort()
+    public function sort(array $elements)
     {
+        $this->elements = $elements;
         $this->quickSort(0, count($this->elements) - 1);
     }
 
