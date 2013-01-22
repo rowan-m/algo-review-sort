@@ -22,34 +22,18 @@ $app['elements.random'] = function ($app) {
     return $elements;
 };
 
-$app['sort.insertion'] = function () {
-    return new Sorting\InsertionSort();
-};
-
-$app['sort.bubble'] = function () {
-    return new Sorting\BubbleSort();
-};
-
-$app['sort.quick'] = function () {
-    return new Sorting\QuickSort();
-};
-
-$app['sort.heap'] = function () {
-    return new Sorting\HeapSort();
-};
-
 $app['observer.snapshots'] = function() {
     return new Sorting\IterationSnapshots();
 };
 
 $sortProvider = function($name) use ($app) {
-    $name = 'sort.' . strtolower($app->escape($name));
+    $className = '\\Sorting\\'.ucfirst(strtolower($app->escape($name))).'Sort';
 
-    if (!isset($app[$name])) {
+    if (!class_exists($className, true) || !is_subclass_of($className, '\\Sorting\\Algorithm')) {
         $app->abort(404, 'No search algorithm found.');
     }
 
-    return $app[$name];
+    return new $className();
 };
 
 $app->get('/sort/{algorithm}', function (Sorting\Algorithm $algorithm) use ($app) {
