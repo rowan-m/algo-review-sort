@@ -4,5 +4,5 @@ namespace Sorting;
 
 interface Observer
 {
-    public function notify(Observable $sort);
+    public function notify(array $elements, array $indices);
 }

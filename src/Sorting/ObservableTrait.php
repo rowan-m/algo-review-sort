@@ -11,10 +11,10 @@ trait ObservableTrait
         $this->observers[] = $observer;
     }
 
-    public function notifyObservers()
+    public function notifyObservers(array $elements, array $indices)
     {
         foreach ($this->observers as $observer) {
-            $observer->notify($this);
+            $observer->notify($elements, $indices);
         }
     }
 }

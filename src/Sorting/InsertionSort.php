@@ -4,46 +4,26 @@ namespace Sorting;
 
 class InsertionSort implements Algorithm, Observable
 {
-
     use ObservableTrait;
-
-    private $elements;
-
-    private $positionToInsert;
-
-    public function __construct()
-    {
-    }
 
     public function sort(array $elements)
     {
-        $this->elements = $elements;
-        $iterations = count($this->elements);
-        $this->notifyObservers();
+        $iterations = count($elements);
+        $this->notifyObservers($elements, array($insertIndex));
 
         for ($index = 1; $index < $iterations; $index++) {
-            $elementToInsert = $this->elements[$index];
-            $this->positionToInsert = $index;
-            $this->notifyObservers();
+            $elementToInsert = $elements[$index];
+            $insertIndex = $index;
+            $this->notifyObservers($elements, array($insertIndex));
 
-            while ($this->positionToInsert > 0 && $elementToInsert < $this->elements[$this->positionToInsert - 1]) {
-                $this->elements[$this->positionToInsert] = $this->elements[$this->positionToInsert - 1];
-                $this->elements[$this->positionToInsert - 1] = $elementToInsert;
-                $this->positionToInsert--;
-                $this->notifyObservers();
+            while ($insertIndex > 0 && $elementToInsert < $elements[$insertIndex - 1]) {
+                $elements[$insertIndex] = $elements[$insertIndex - 1];
+                $elements[$insertIndex - 1] = $elementToInsert;
+                $insertIndex--;
+                $this->notifyObservers($elements, array($insertIndex));
             }
         }
 
-        $this->notifyObservers();
-    }
-
-    public function getElements()
-    {
-        return $this->elements;
-    }
-
-    public function getIndices()
-    {
-        return array($this->positionToInsert);
+        $this->notifyObservers($elements, array($insertIndex));
     }
 }
