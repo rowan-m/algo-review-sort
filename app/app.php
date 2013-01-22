@@ -14,6 +14,7 @@ $app['elements.max'] = 360;
 
 $app['elements.random'] = function ($app) {
     $elements = array();
+
     for ($index = 0; $index < $app['elements.total']; $index++) {
         $elements[$index] = mt_rand($app['elements.min'], $app['elements.max']);
     }
@@ -26,7 +27,7 @@ $app['sort.insertion'] = function () {
 };
 
 $app['sort.quick'] = function () {
-    return new Sorting\InsertionSort();
+    return new Sorting\QuickSort();
 };
 
 $app['observer.snapshots'] = function() {
