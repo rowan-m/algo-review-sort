@@ -8,6 +8,7 @@ class QuickSort implements Algorithm, Observable
 
     public function sort(array $elements)
     {
+        $this->notifyObservers($elements, array());
         $this->doQuickSort($elements, 0, count($elements) - 1);
     }
 
