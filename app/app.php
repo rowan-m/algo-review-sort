@@ -8,16 +8,37 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__ . '/views',
 ));
 
-$app->get('/sort/{algorithm}', function ($algorithm) use ($app) {
-    $total = 6;
+$app['elements.total'] = 6;
+$app['elements.min'] = 0;
+$app['elements.max'] = 360;
+
+$app['elements.random'] = function ($app) {
     $elements = array();
 
-    for ($index = 0; $index < $total; $index++) {
-        $elements[$index] = mt_rand(0, 360);
+    for ($index = 0; $index < $app['elements.total']; $index++) {
+        $elements[$index] = mt_rand($app['elements.min'], $app['elements.max']);
     }
 
-    $snapshots = new Sorting\IterationSnapshots();
-    $algorithm = new Sorting\QuickSort($elements);
+    return $elements;
+};
+
+$app['elements'] = $app['elements.random'];
+
+$app['sort.insertionsort'] = function ($app) {
+    return new Sorting\InsertionSort($app['elements']);
+};
+
+$app['sort.quicksort'] = function ($app) {
+    return new Sorting\InsertionSort($app['elements']);
+};
+
+$app['observer.snapshots'] = function($app) {
+    return new Sorting\IterationSnapshots();
+};
+
+$app->get('/sort/{algorithm}', function ($algorithm) use ($app) {
+    $snapshots = $app['observer.snapshots'];
+    $algorithm = new Sorting\QuickSort($app['elements']);
     $algorithm->addObserver($snapshots);
     $algorithm->sort();
 
