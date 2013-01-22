@@ -50,7 +50,7 @@
                 {% for element in snapshot.elements %}
                     <div class="element">
                         <span class="index
-                            {% if loop.index0 == snapshot.indices.0 %}
+                            {% if snapshot.indices.0 is defined and loop.index0 == snapshot.indices.0 %}
                                 primary
                             {% else %}
                                 secondary
