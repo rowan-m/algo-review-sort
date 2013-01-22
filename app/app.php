@@ -21,11 +21,11 @@ $app['elements.random'] = function ($app) {
     return $elements;
 };
 
-$app['sort.insertionsort'] = function () {
+$app['sort.insertion'] = function () {
     return new Sorting\InsertionSort();
 };
 
-$app['sort.quicksort'] = function () {
+$app['sort.quick'] = function () {
     return new Sorting\InsertionSort();
 };
 
@@ -47,7 +47,7 @@ $app->get('/sort/{algorithm}', function (Sorting\Algorithm $algorithm) use ($app
     if ($app['request']->get('total') && $app['request']->get('total') > 0) {
         $app['elements.total'] = (int) $app['request']->get('total');
     }
-    
+
     $snapshots = $app['observer.snapshots'];
     $algorithm->addObserver($snapshots);
     $algorithm->sort($app['elements.random']);
