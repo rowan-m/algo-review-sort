@@ -9,7 +9,7 @@ class InsertionSort implements Algorithm, Observable
     public function sort(array $elements)
     {
         $iterations = count($elements);
-        $this->notifyObservers($elements, array($insertIndex));
+        $this->notifyObservers($elements, array());
 
         for ($index = 1; $index < $iterations; $index++) {
             $elementToInsert = $elements[$index];
