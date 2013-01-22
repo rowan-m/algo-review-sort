@@ -34,6 +34,10 @@ $app['sort.quick'] = function () {
     return new Sorting\QuickSort();
 };
 
+$app['sort.heap'] = function () {
+    return new Sorting\HeapSort();
+};
+
 $app['observer.snapshots'] = function() {
     return new Sorting\IterationSnapshots();
 };
