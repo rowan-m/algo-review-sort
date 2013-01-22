@@ -27,7 +27,7 @@
                 .index.secondary {
                     color: gray;
                 }
-                .element {
+                .value {
                     display:inline-block;
                     margin-top: 3px;
                     margin-bottom: 3px;
@@ -48,7 +48,7 @@
             <div class = "snapshot">
                 <span class="iteration">{{ loop.index }}</span>
                 {% for element in snapshot.elements %}
-                    <div >
+                    <div class="element">
                         <span class="index
                             {% if loop.index0 == snapshot.indices.0 %}
                                 primary
@@ -58,7 +58,7 @@
                         >
                             {% if loop.index0 in snapshot.indices %}&#x21aa;{% endif %}
                         </span>
-                        <span class="element"
+                        <span class="value"
                             style="border-color: hsl({{ element }}, 100%, 75%);
                                 background: hsl({{ element }}, 50%, 75%);
                                 color: hsl({{ element }}, 80%, 30%);"
