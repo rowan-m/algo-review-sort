@@ -26,6 +26,10 @@ $app['sort.insertion'] = function () {
     return new Sorting\InsertionSort();
 };
 
+$app['sort.bubble'] = function () {
+    return new Sorting\BubbleSort();
+};
+
 $app['sort.quick'] = function () {
     return new Sorting\QuickSort();
 };
