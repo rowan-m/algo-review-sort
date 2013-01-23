@@ -1,9 +1,12 @@
+.sort-embedded {
+    font-size: 45% !important;
+}
+
 .sort-result {
     font-family: "Ubuntu Mono", monospace !important;
     font-weight: normal !important;
     letter-spacing: normal !important;
     line-height: normal !important;
-    font-size: 45% !important;
     vertical-align: middle;
 }
 
