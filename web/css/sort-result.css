@@ -1,0 +1,49 @@
+.sort-result {
+    font-family: "Ubuntu Mono", monospace !important;
+    font-weight: normal !important;
+    letter-spacing: normal !important;
+    line-height: normal !important;
+    font-size: 45% !important;
+    vertical-align: middle;
+}
+
+.sort-result .snapshot {
+    position: relative;
+    display:inline-block;
+    width:95px;
+    padding: 3px;
+    margin: 3px;
+    border: 1px gray dotted;
+    text-align: right;
+}
+.sort-result .iteration {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 1px;
+    font-size: small;
+    color: dimgrey;
+    background: lightgray;
+}
+.sort-result .index {}
+.sort-result .index.primary {
+    color: dimgray;
+    font-weight: bolder;
+}
+.sort-result .index.secondary {
+    color: gray;
+}
+.sort-result .value {
+    display:inline-block;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    text-align: center;
+    height: 20px;
+    width: 50px;
+    border-radius: 5px;
+    border: 4px groove;
+}
+.sort-result .diff {
+    color: red;
+    font-weight: bold;
+}
