@@ -12,7 +12,7 @@ class HeapSort implements Algorithm, Observable
         $size = count($elements);
         $this->notifyObservers($elements, array());
 
-        for ($index = round(($size / 2)) - 1; $index >= 0; $index--) {
+        for ($index = floor(($size / 2)) - 1; $index >= 0; $index--) {
             $elements = $this->siftDown($elements, $index, $size);
         }
 
