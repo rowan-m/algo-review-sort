@@ -15,6 +15,31 @@ $app->get('/sort/{algorithm}', function (Sorting\Algorithm $algorithm) use ($app
     ));
 })->convert('algorithm', $sortProvider);
 
+$app->get('/example/stable', function () use ($app) {
+    $snapshots = array(
+        array('elements' => array('4:A', '1:A', '1:B', '3:A', '2:A', '3:B', '2:B', '2:C'), 'indices' => array()),
+        array('elements' => array('1:A', '1:B', '2:A', '2:B', '2:C', '3:A', '3:B', '4:B'), 'indices' => array()),
+    );
+
+    return $app['twig']->render('horizontal.html.twig', array(
+        'snapshots' => $snapshots,
+        'embedded' => (bool) $app['request']->get('embedded'),
+    ));
+});
+
+$app->get('/example/unstable', function () use ($app) {
+    $snapshots = array(
+        array('elements' => array('4:A', '1:A', '1:B', '3:A', '2:A', '3:B', '2:B', '2:C'), 'indices' => array()),
+        array('elements' => array('1:B', '1:A', '2:C', '2:B', '2:A', '3:A', '3:B', '4:B'), 'indices' => array()),
+        array('elements' => array('1:A', '1:B', '2:A', '2:B', '2:C', '3:A', '3:B', '4:B'), 'indices' => array()),
+    );
+
+    return $app['twig']->render('horizontal.html.twig', array(
+        'snapshots' => $snapshots,
+        'embedded' => (bool) $app['request']->get('embedded'),
+    ));
+});
+
 $app->get('/presentation', function () use ($app) {
     return $app['twig']->render('presentation.html.twig');
 });
