@@ -43,25 +43,91 @@
 				</section>
 
                 <section>
-                    <h2>Big Philosophical Questions<h2>
-                            <h3>Who am I?</h3>
-                            <h3>Why am I here?</h3>
+                    <h2>Let's start with the<br /><span style="font-size: 120%;">Big</span><br /> Philosophical Questions<h2>
                 </section>
 
                 <section>
                     <h2>Who am I?</h2>
+                    <p class="fragment">Software Engineer and Technical Team Lead</p>
+                    <pre class="fragment language-php"><code contenteditable style="font-size: 85%;">$inviqaGroup = ['Inviqa', 'Sensio Labs UK', 'Session Digital'];</code></pre>
+                    <pre class="fragment language-php"><code contenteditable style="font-size: 85%;">$social = [
+    'blog'     => 'http://merewood.org',
+    'facebook' => $this->graphSearch('people i am stalking'),
+    'github'   => 'https://github.com/rowan-m',
+    'google+'  => 'https://plus.google.com/111813845727005160164',
+    'identica' => 'http://identi.ca/rowanm',
+    'twitter'  => 'https://twitter.com/rowan_m',
+];</code></pre>
                 </section>
 
                 <section>
                     <h2>Why am I here?</h2>
+                    <ol>
+                        <li class="fragment">Because straight-up, pure computer science is <br /><strong>AWESOME</strong>.</li>
+                        <li class="fragment"><pre style="font-size: 90%;">^EOF</pre>
+                    </ol>
+                    <p class="fragment"><br /><em>Also, understanding the lower level detail helps you make better use of the higher level abstractions.</em></p>
                 </section>
 
                 <section>
                     <h2>Why sort?</h2>
+                    <ul>
+                        <li class="fragment">Displaying lists to humans</li>
+                        <li class="fragment">Categorising data</li>
+                        <li class="fragment">Preparing data for merging</li>
+                        <li class="fragment">Preparing data for searching</li>
+                    </ul>
+                    <p class="fragment"><br /><em>In general: to display or to prepare for another operation.</em></p>
                 </section>
 
                 <section>
-                    <h2>Comparing Algorithms</h2>
+                    <h1>Comparing<br /> Algorithms</h1>
+                </section>
+
+                <section>
+                    <h2>Stability</h2>
+
+                    <div style="float: left; width: 35%;">
+                        <h3>Stable</h3>
+                    {{ render(app.request.baseUrl ~ '/example/stable?embedded=1') }}
+                    </div>
+
+                    <div style="float: right; width: 55%;">
+                        <h3>Unstable</h3>
+                    {{ render(app.request.baseUrl ~ '/example/unstable?embedded=1') }}
+                    </div>
+
+                    <div class="fragment" style="float: left; width: 35%;">
+                        <p><em>Order of unsorted portion maintained</em></p>
+                    </div>
+
+                    <div class="fragment" style="float: right; width: 55%;">
+                        <p><em>Order of unsorted portion may change</em></p>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Big O Notation</h2>
+                    <p class="fragment"><em>Rate of growth for resource usage based on the size of its input.</em><br /></p>
+                    <ul>
+                        <li class="fragment">Resource usage: <em>CPU cycles / time, memory usage</em></li>
+                        <li class="fragment">Size of input: <em>number of elements</em></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Big O Notation <em style="font-size: 60%;">(cont.)</em></h2>
+                    <ul>
+                        <li class="fragment">&#x039f;(1): <em>Constant</em></li>
+                        <li class="fragment">&#x039f;(<em>n</em>): <em>Linear growth</em></li>
+                        <li class="fragment">&#x039f;(<em>n</em> log <em>n</em>): <em>Logarithmic growth</em></li>
+                        <li class="fragment">&#x039f;(<em>n</em><sup style="font-size: 60%">2</sup>): <em>Quadratic growth</em></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Adaptability</h2>
+                    <p class="fragment">An adaptive algorithm has better performance when the list is already partially sorted</p>
                 </section>
 
                 <section>
@@ -70,45 +136,339 @@
 
                 <section>
                     <h2>Insertion Sort</h2>
+                    <h3>Code</h3>
+                    <pre class="fragment language-php"><code contenteditable style="font-size: 70%;">class InsertionSort {
+    public function sort(array $elements) {
+        $iterations = count($elements);
+        for ($index = 1; $index < $iterations; $index++) {
+            $elementToInsert = $elements[$index];
+            $insertIndex = $index;
+
+            while ($insertIndex > 0 && $elementToInsert < $elements[$insertIndex - 1]) {
+                $elements[$insertIndex] = $elements[$insertIndex - 1];
+                $elements[$insertIndex - 1] = $elementToInsert;
+                $insertIndex--;
+            }
+        }
+        return $elements;
+    }
+}</code></pre>
+                </section>
+
+                <section>
+                    <h2>Insertion Sort <em style="font-size: 60%;">(cont.)</em></h2>
+                    <h3>Code: Iterate through the list</h3>
+                    <pre class="language-php"><code contenteditable style="font-size: 70%; margin-top: 20px;">public function sort(array $elements) {
+    // At least one iteration per element
+    $iterations = count($elements);
+
+    for ($index = 1; $index < $iterations; $index++) {
+        // If no other variable operations happen here:
+        // algorithm is O(n)
+    }
+}</code></pre>
+                </section>
+
+                <section>
+                    <h2>Insertion Sort <em style="font-size: 60%;">(cont.)</em></h2>
+                    <h3>Code: Compare elements</h3>
+                    <pre class="language-php" style="box-shadow: none;"><code contenteditable style="font-size: 70%; margin-top: 20px;">for ($index = 1; $index < $iterations; $index++) {
+    // "Pick up" the current element and its position
+    $elementToInsert = $elements[$index];
+    $insertIndex = $index;
+
+    // Iterate back through the elements
+    // until the correct position it reached
+    while ($insertIndex > 0 && $elementToInsert < $elements[$insertIndex - 1]) {
+        // Swap out of order elements
+        $elements[$insertIndex] = $elements[$insertIndex - 1];
+        $elements[$insertIndex - 1] = $elementToInsert;
+        $insertIndex--;
+    }
+}</code></pre>
+                    <p class="fragment">If the list is in order, the <code style="font-size: 70%;">while</code> loop is not entered.</p>
+                </section>
+
+                <section>
+                    <h2>Insertion Sort <em style="font-size: 60%;">(cont.)</em></h2>
                     <h3>Iterations</h3>
 
                     {{ render(app.request.baseUrl ~ '/sort/insertion?total=4&embedded=1') }}
 
+                    <p class="fragment"><br /><em>Sorted!</em></p>
+
+                </section>
+
+                <section>
+                    <h2>Insertion Sort <em style="font-size: 60%;">(cont.)</em></h2>
+                    <h3>Summary</h3>
+                    <ul>
+                        <li class="fragment">Best case: &#x039f;(<em>n</em>)</li>
+                        <li class="fragment">Average / worst case: &#x039f;(<em>n</em><sup>2</sup>)
+                        <li class="fragment">Memory usage: &#x039f;(<em>n</em>)</li>
+                        <li class="fragment">Adaptive, stable, in place, and on line(<em>n</em>)</li>
+                    </ul>
                 </section>
 
                 <section>
                     <h2>Bubble Sort</h2>
-                    <h3>Iterations</h3>
-
-                    {{ render(app.request.baseUrl ~ '/sort/bubble?total=4&embedded=1') }}
+                    <h3>Code</h3>
+                    <pre class="fragment language-php"><code contenteditable style="font-size: 70%;">class BubbleSort {
+    public function sort(array $elements) {
+        for ($index = count($elements); $index > 0; $index--) {
+            $swapped = false;
+            for ($swapIndex = 0; $swapIndex < $index - 1; $swapIndex++) {
+                if ($elements[$swapIndex] > $elements[$swapIndex + 1]) {
+                    $tmp = $elements[$swapIndex];
+                    $elements[$swapIndex] = $elements[$swapIndex + 1];
+                    $elements[$swapIndex + 1] = $tmp;
+                    $swapped = true;
+                }
+            }
+            if (!$swapped) { return $elements; }
+        }
+    }
+}</code></pre>
                 </section>
 
                 <section>
+                    <h2>Bubble Sort <em style="font-size: 60%;">(cont.)</em></h2>
+                    <h3>Code: Iterate through the list</h3>
+                    <pre class="language-php"><code contenteditable style="font-size: 70%;">// Iterate through the elements
+for ($index = count($elements); $index > 0; $index--) {
+    $swapped = false;
+    // Swap out of order elements
+    // until there's nothing left to swap
+    if (!$swapped) { return $elements; }
+}</code></pre>
+                </section>
+
+                <section>
+                    <h2>Bubble Sort <em style="font-size: 60%;">(cont.)</em></h2>
+                    <h3>Code</h3>
+                    <pre class="fragment language-php"><code contenteditable style="font-size: 70%;">for ($index = count($elements); $index > 0; $index--) {
+    $swapped = false;
+    // Iterate through the unsorted portion of the list
+    for ($swapIndex = 0; $swapIndex < $index - 1; $swapIndex++) {
+        // Compare and swap elements
+        if ($elements[$swapIndex] > $elements[$swapIndex + 1]) {
+            $tmp = $elements[$swapIndex];
+            $elements[$swapIndex] = $elements[$swapIndex + 1];
+            $elements[$swapIndex + 1] = $tmp;
+            $swapped = true;
+        }
+    }
+    if (!$swapped) { return $elements; }
+}</code></pre>
+                    <p class="fragment">If the list is in order, then <code style="font-size: 70%;">$swapped</code> stays <code>false</code>.</p>
+                </section>
+
+                <section>
+                    <h2>Bubble Sort <em style="font-size: 60%;">(cont.)</em></h2>
+                    <h3>Iterations</h3>
+
+                    {{ render(app.request.baseUrl ~ '/sort/bubble?total=4&embedded=1') }}
+
+                    <p class="fragment"><br /><em>Sorted!</em></p>
+                </section>
+
+                <section>
+                    <h2>Bubble Sort <em style="font-size: 60%;">(cont.)</em></h2>
+                    <h3>Summary</h3>
+                    <ul>
+                        <li class="fragment">Best case: &#x039f;(<em>n</em>)</li>
+                        <li class="fragment">Average / worst case: &#x039f;(<em>n</em><sup>2</sup>)
+                        <li class="fragment">Memory usage: &#x039f;(<em>n</em>)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Bubble Sort <em style="font-size: 60%;">(cont.)</em></h2>
+                    <h3>The ugly Knuth</h3>
+                    <blockquote class="fragment">The bubble sort seems to have nothing to recommend it, except a catchy name and the fact that it leads to some interesting theoretical problems</blockquote>
+                </section>
+                <section>
                     <h2>Quick Sort</h2>
+                    <h3>Code</h3>
+                    <pre class="fragment language-php"><code contenteditable style="font-size: 70%;">class QuickSort {
+    public function sort(array $elements) {
+        $this->doQuickSort($elements, 0, count($elements) - 1);
+        return $elements;
+    }
+
+    function doQuickSort($elements, $leftIndex, $rightIndex) {
+        // Divide the array in two, creating a “pivot” value
+        // Move any value lower than the pivot to the left array
+        // Move any value higher than the pivot to the right array
+        // Recursively repeat the same operation on both arrays
+    }
+}</code></pre>
+                </section>
+
+                <section>
+                    <h2>Quick Sort <em style="font-size: 60%;">(cont.)</em></h2>
+                    <h3>Code: Create a pivot</h3>
+                    <pre class="language-php"><code contenteditable style="font-size: 70%;">function doQuickSort($elements, $leftIndex, $rightIndex) {
+    // Divide the array in two, creating a “pivot” value
+    $pivotIndex = ceil($leftIndex + (($rightIndex - $leftIndex) / 2));
+    $pivotElement = $elements[$pivotIndex];
+    $leftSwapIndex = $leftIndex;
+    $rightSwapIndex = $rightIndex;
+    while ($leftSwapIndex <= $rightSwapIndex) {
+        // Move the left index until we find an out of order element
+        // Move the right index until we find an out of order element
+        // Swap them
+    }
+}</code></pre>
+                </section>
+                <section>
+                    <h2>Quick Sort <em style="font-size: 60%;">(cont.)</em></h2>
+                    <h3>Code: Swap values</h3>
+                    <pre class="language-php"><code contenteditable style="font-size: 70%;">while ($leftSwapIndex <= $rightSwapIndex) {
+    // Move the left index until we find an out of order element
+    while ($elements[$leftSwapIndex] < $pivotElement) { $leftSwapIndex++; }
+    // Move the right index until we find an out of order element
+    while ($elements[$rightSwapIndex] > $pivotElement) { $rightSwapIndex--; }
+    // Swap them
+    if ($leftSwapIndex <= $rightSwapIndex) {
+        $tmp = $elements[$leftSwapIndex];
+        $elements[$leftSwapIndex] = $elements[$rightSwapIndex];
+        $elements[$rightSwapIndex] = $tmp;
+        $leftSwapIndex++;
+        $rightSwapIndex--;
+    }
+}</code></pre>
+                </section>
+
+<section>
+                    <h2>Quick Sort <em style="font-size: 60%;">(cont.)</em></h2>
+                    <h3>Code: Recurse</h3>
+                    <pre class="language-php"><code contenteditable style="font-size: 70%;">function doQuickSort($elements, $leftIndex, $rightIndex) {
+    // Divide the array in two, creating a “pivot” value
+    // Move any value lower than the pivot to the left array
+    // Move any value higher than the pivot to the right array
+    // Recursively repeat the same operation on both arrays
+    if ($leftIndex < $rightSwapIndex) {
+        $this->doQuickSort($elements, $leftIndex, $rightSwapIndex);
+    }
+    if ($leftSwapIndex < $rightIndex) {
+        $this->doQuickSort($elements, $leftSwapIndex, $rightIndex);
+    }
+}</code></pre>
+                </section>
+
+                <section>
+                    <h2>Quick Sort <em style="font-size: 60%;">(cont.)</em></h2>
                     <h3>Iterations</h3>
 
                     {{ render(app.request.baseUrl ~ '/sort/quick?total=4&embedded=1') }}
+
+                    <p class="fragment"><br /><em>Sorted!</em></p>
+                </section>
+
+                <section>
+                    <h2>Quick Sort <em style="font-size: 60%;">(cont.)</em></h2>
+                    <h3>Summary</h3>
+                    <ul>
+                        <li class="fragment">Best / average case: &#x039f;(<em>n</em> log <em>n</em>)</li>
+                        <li class="fragment">Worst case: &#x039f;(<em>n</em><sup>2</sup>)</li>
+                        <li class="fragment">Implemented by <code>sort()</code></li>
+                        <li class="fragment">Easily parallelized</li>
+                    </ul>
                 </section>
 
                 <section>
                     <h2>Heap Sort</h2>
-                    <h3>Iterations</h3>
+                    <h3>Code</h3>
+                    <pre class="language-php"><code contenteditable style="font-size: 70%;">class HeapSort {
+    public function sort(array $elements) {
+        $size = count($elements);
+        for ($index = floor(($size / 2)) - 1; $index >= 0; $index--) {
+            $elements = $this->siftDown($elements, $index, $size);
+        }
+        for ($index = $size - 1; $index >= 1; $index--) {
+            $tmp = $elements[0];
+            $elements[0] = $elements[$index];
+            $elements[$index] = $tmp;
+            $elements = $this->siftDown($elements, 0, $index - 1);
+        }
+        return $elements;
+    }
+}</code></pre>
+                </section>
 
-                    {{ render(app.request.baseUrl ~ '/sort/heap?total=4&embedded=1') }}
+<section>
+                    <h2>Heap Sort <em style="font-size: 60%;">(cont.)</em></h2>
+                    <h3>Code</h3>
+                    <pre class="language-php"><code contenteditable style="font-size: 70%;">public function siftDown(array $elements, $root, $bottom) {
+    $done = false;
+    while (($root * 2 <= $bottom) && (!$done)) {
+        if ($root * 2 == $bottom) $maxChild = $root * 2;
+        elseif ($elements[$root * 2] > $elements[$root * 2 + 1]) $maxChild = $root * 2;
+        else $maxChild = $root * 2 + 1;
+
+        if ($elements[$root] < $elements[$maxChild]) {
+            $tmp = $elements[$root];
+            $elements[$root] = $elements[$maxChild];
+            $elements[$maxChild] = $tmp;
+            $root = $maxChild;
+        } else
+            $done = true;
+    }
+    return $elements;
+}</code></pre>
                 </section>
 
                 <section>
-                    <h2>Bucket Sort</h2>
+                    <h2>Heap Sort <em style="font-size: 60%;">(cont.)</em></h2>
                     <h3>Iterations</h3>
+
+                    {{ render(app.request.baseUrl ~ '/sort/heap?total=4&embedded=1') }}
+
+                    <p class="fragment"><br /><em>Sorted!</em></p>
+                </section>
+
+                <section>
+                    <h2>Heap Sort <em style="font-size: 60%;">(cont.)</em></h2>
+                    <h3>Summary</h3>
+                    <ul>
+                        <li class="fragment">Best / average  / worst case: &#x039f;(<em>n</em> log <em>n</em>)</li>
+                        <li class="fragment">Implemented by <code>SplMinHeap()</code></li>
+                    </ul>
+                    <pre class="fragment language-php"><code contenteditable style="font-size: 70%;">$h = new SplMinHeap();
+foreach ($unsorted as $val) $h->insert($val);
+$h->top();
+while($h->valid()) {
+    echo $h->current()."\n";
+    $h->next();
+}</code></pre>
+                </section>
+
+                <section>
+                    <h1>Summing up</h1>
+                </section>
+
+                <section>
+                    <h2>History</h2>
+                    <ul>
+                        <li class="fragment">Insertion Sort:optimised in 1959 (Shell Sort)</li>
+                        <li class="fragment">Bubble Sort: improved in 1980 (Comb Sort)</li>
+                        <li class="fragment">Quick Sort: developed in 1960 (C. A. R. Hoare)</li>
+                        <li class="fragment">Heap Sort: improved in the '60s (Robert Floyd)</li>
+                    </ul>
+                    <p class="fragment"><br /><em>Oh, and there's Radix Sort used by Herman Hollerith in 1887</em></p>
+                </section>
+
+                <section>
+                    <h2>Combining algorithms</h2>
+                    <p class="fragment">Set a threshold in the quick sort algorithm so it swaps to insertion sort for smaller arrays</p>
                 </section>
 
 				<section>
-					<h1>Questions?</h1>
+					<h1>Thank you!</h1>
                     <h3><a href="https://joind.in/7790">https://joind.in/7790</a></h3>
 				</section>
-
 			</div>
-
 		</div>
 
 		<script src="/lib/js/head.min.js"></script>
