@@ -1,5 +1,5 @@
-"Algorith, Review, Sort"
-========================
+"Algorithm, Review, Sort"
+=========================
 
 Sample code and presentation from PHP Benelux 2013
 
