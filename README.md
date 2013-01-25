@@ -1,7 +1,7 @@
 "Algorithm, Review, Sort"
 =========================
 
-Sample code and presentation from PHP Benelux 2013
+Sample code and presentation from PHP Benelux 2013. If you watched the talk, please [leave me some feedback](https://joind.in/7790)!
 
 Installation
 ------------
