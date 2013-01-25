@@ -19,14 +19,14 @@ The presentation is a Silex application using [reveal.js](http://lab.hakim.se/re
 
     php -S localhost:8000 -t web/
 
-You can then browse to http://localhost:8000/presentation
+You can then browse to [http://localhost:8000/presentation](http://localhost:8000/presentation)
 
 The individual visualisations are also available:
-* http://localhost:8000/sort/insertion
-* http://localhost:8000/sort/bubble
-* http://localhost:8000/sort/quick
-* http://localhost:8000/sort/heap
+* [http://localhost:8000/sort/insertion](http://localhost:8000/sort/insertion)
+* [http://localhost:8000/sort/bubble](http://localhost:8000/sort/bubble)
+* [http://localhost:8000/sort/quick](http://localhost:8000/sort/quick)
+* [http://localhost:8000/sort/heap](http://localhost:8000/sort/heap)
 
-You can pass `total` in the query string to change the number of elements, e.g. http://localhost:8000/sort/quick?total=10
+You can pass `total` in the query string to change the number of elements, e.g. [http://localhost:8000/sort/quick?total=10](http://localhost:8000/sort/quick?total=10)
 
 
