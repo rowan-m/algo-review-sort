@@ -29,4 +29,7 @@ The individual visualisations are also available:
 
 You can pass `total` in the query string to change the number of elements, e.g. [http://localhost:8000/sort/quick?total=10](http://localhost:8000/sort/quick?total=10)
 
+Exported Presentation
+---------------------
 
+There's also a [PDF export of the presentation](/rowan-m/algo-review-sort/raw/master/algo-review-sort.pdf) in case you don't feel like running the code. It's not as pretty though.
