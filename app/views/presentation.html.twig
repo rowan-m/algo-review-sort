@@ -380,7 +380,7 @@ for ($index = count($elements); $index > 0; $index--) {
                 <section>
                     <h2>Heap Sort</h2>
                     <h3>Code</h3>
-                    <pre class="language-php"><code contenteditable style="font-size: 70%;">class HeapSort {
+                    <pre class=" fragment language-php"><code contenteditable style="font-size: 70%;">class HeapSort {
     public function sort(array $elements) {
         $size = count($elements);
         for ($index = floor(($size / 2)) - 1; $index >= 0; $index--) {
@@ -399,7 +399,7 @@ for ($index = count($elements); $index > 0; $index--) {
 
 <section>
                     <h2>Heap Sort <em style="font-size: 60%;">(cont.)</em></h2>
-                    <h3>Code</h3>
+                    <h3>Code: Sift the heap</h3>
                     <pre class="language-php"><code contenteditable style="font-size: 70%;">public function siftDown(array $elements, $root, $bottom) {
     $done = false;
     while (($root * 2 <= $bottom) && (!$done)) {
@@ -451,7 +451,7 @@ while($h->valid()) {
                 <section>
                     <h2>History</h2>
                     <ul>
-                        <li class="fragment">Insertion Sort:optimised in 1959 (Shell Sort)</li>
+                        <li class="fragment">Insertion Sort: optimised in 1959 (Shell Sort)</li>
                         <li class="fragment">Bubble Sort: improved in 1980 (Comb Sort)</li>
                         <li class="fragment">Quick Sort: developed in 1960 (C. A. R. Hoare)</li>
                         <li class="fragment">Heap Sort: improved in the '60s (Robert Floyd)</li>
