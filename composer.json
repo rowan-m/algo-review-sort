@@ -5,6 +5,7 @@
     },
     "autoload": {
         "psr-0": {
+            "Searching": "src/",
             "Sorting": "src/"
         }
     }
