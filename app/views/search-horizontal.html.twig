@@ -1,0 +1,38 @@
+{% extends embedded ? "embedded.html.twig" : "layout.html.twig" %}
+
+{% block body %}
+<div class="sort-result">
+    {% for snapshot in snapshots %}
+        <div class = "snapshot fragment">
+            <span class="iteration">{{ loop.index }}</span>
+            <div class="element">
+                    <span class="value"
+                        style="border-color: hsl({{ target }}, 100%, 75%);
+                            background: hsl({{ target }}, 50%, 75%);
+                            color: hsl({{ target }}, 80%, 30%);"
+                    >{{ target }}</span>
+            </div>
+            <hr />
+            {% for element in elements %}
+                <div class="element">
+                    <span class="index
+                        {% if snapshot.indices.0 is defined and loop.index0 == snapshot.indices.0 %}
+                            primary
+                        {% else %}
+                            secondary
+                        {% endif %}"
+                        >
+                    {% if loop.index0 in snapshot.indices %}&#x21aa;{% endif %}
+                    </span>
+                    <span class="value"
+                        style="border-color: hsl({{ element }}, 100%, 75%);
+                            background: hsl({{ element }}, 50%, 75%);
+                            color: hsl({{ element }}, 80%, 30%);"
+                    >{{ element }}</span>
+                {% if loop.index0 in snapshot.attempts %}{%if element == target %}<span class="hit">&#x2714;{% else %}<span class="miss">&#x2718;{% endif %}{% endif %}</span>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
