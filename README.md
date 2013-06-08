@@ -1,7 +1,11 @@
 "Algorithm, Review, Sort"
 =========================
 
-Sample code and presentation from PHP Benelux 2013. If you watched the talk, please [leave me some feedback](https://joind.in/7790)!
+Sample code and presentation from PHP Benelux 2013. If you watched the talk, please [leave me some feedback](https://joind.in/8454)!
+
+There's also a [PDF export of the presentation](/rowan-m/algo-review-sort/raw/master/algo-review-sort.pdf) in case you don't feel like running the code (you should though, it's more fun).
+
+You can also view the export on [Speaker Deck](https://speakerdeck.com/rowan_m/algorithms-sorting-and-searching)
 
 Installation
 ------------
@@ -26,10 +30,7 @@ The individual visualisations are also available:
 * [http://localhost:8000/sort/bubble](http://localhost:8000/sort/bubble)
 * [http://localhost:8000/sort/quick](http://localhost:8000/sort/quick)
 * [http://localhost:8000/sort/heap](http://localhost:8000/sort/heap)
+* [http://localhost:8000/search/sequential](http://localhost:8000/search/sequential)
+* [http://localhost:8000/search/binary](http://localhost:8000/search/binary)
 
 You can pass `total` in the query string to change the number of elements, e.g. [http://localhost:8000/sort/quick?total=10](http://localhost:8000/sort/quick?total=10)
-
-Exported Presentation
----------------------
-
-There's also a [PDF export of the presentation](/rowan-m/algo-review-sort/raw/master/algo-review-sort.pdf) in case you don't feel like running the code. It's not as pretty though.
