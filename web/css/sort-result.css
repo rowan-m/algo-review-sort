@@ -50,3 +50,11 @@
     color: red;
     font-weight: bold;
 }
+.sort-result .hit {
+    color: green;
+    font-weight: bold;
+}
+.sort-result .miss {
+    color: red;
+    font-weight: bold;
+}
