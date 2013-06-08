@@ -22,18 +22,29 @@ $app['elements.random'] = function ($app) {
     return $elements;
 };
 
-$app['observer.snapshots'] = function() {
+$app['observer.sort.snapshots'] = function() {
     return new Sorting\IterationSnapshots();
 };
 
-$sortProvider = function($name) use ($app) {
-    $className = '\\Sorting\\'.ucfirst(strtolower($app->escape($name))).'Sort';
+$app['observer.search.snapshots'] = function() {
+    return new Searching\IterationSnapshots();
+};
 
-    if (!class_exists($className, true) || !is_subclass_of($className, '\\Sorting\\Algorithm')) {
-        $app->abort(404, 'No search algorithm found.');
+$algorithmProvider = function($name, $type) use ($app) {
+    $className = '\\' . $type . 'ing\\' . ucfirst(strtolower($app->escape($name))) . $type;
+    if (!class_exists($className, true) || !is_subclass_of($className, '\\' . $type . 'ing\\Algorithm')) {
+        $app->abort(404, 'No ' . strtolower($type) . ' algorithm found.');
     }
 
     return new $className();
+};
+
+$sortProvider = function($name) use ($algorithmProvider) {
+    return $algorithmProvider($name, 'Sort');
+};
+
+$searchProvider = function($name) use ($algorithmProvider) {
+    return $algorithmProvider($name, 'Search');
 };
 
 return $app;
