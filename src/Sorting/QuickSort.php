@@ -41,11 +41,13 @@ class QuickSort implements Algorithm, Observable
         }
 
         if ($leftIndex < $rightSwapIndex) {
-            $this->doQuickSort($elements, $leftIndex, $rightSwapIndex);
+            $elements = $this->doQuickSort($elements, $leftIndex, $rightSwapIndex);
         }
 
         if ($leftSwapIndex < $rightIndex) {
-            $this->doQuickSort($elements, $leftSwapIndex, $rightIndex);
+            $elements = $this->doQuickSort($elements, $leftSwapIndex, $rightIndex);
         }
+
+        return $elements;
     }
 }
