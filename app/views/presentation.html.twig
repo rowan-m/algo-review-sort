@@ -1,46 +1,46 @@
 <!doctype html>
 <html lang="en">
 
-	<head>
-		<meta charset="utf-8">
+    <head>
+        <meta charset="utf-8">
 
-		<title>Algorithm, Review, Sorting - Merewood, Rowan</title>
+        <title>Algorithm, Review, Sorting - Merewood, Rowan</title>
 
-		<meta name="description" content="Algorithm, Review, Sorting">
-		<meta name="author" content="Rowan Merewood">
+        <meta name="description" content="Algorithm, Review, Sorting">
+        <meta name="author" content="Rowan Merewood">
 
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-		<link rel="stylesheet" href="/css/reveal.min.css">
-		<link rel="stylesheet" href="/css/theme/beige.css" id="theme">
+        <link rel="stylesheet" href="/css/reveal.min.css">
+        <link rel="stylesheet" href="/css/theme/beige.css" id="theme">
 
-		<!-- For syntax highlighting -->
-		<link rel="stylesheet" href="/lib/css/zenburn.css">
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="/lib/css/zenburn.css">
 
         <link rel="stylesheet" href="/css/sort-result.css">
 
-		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
-		<script>
-			document.write( '<link rel="stylesheet" href="/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-		</script>
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
 
-		<!--[if lt IE 9]>
-		<script src="/lib/js/html5shiv.js"></script>
-		<![endif]-->
-	</head>
+        <!--[if lt IE 9]>
+        <script src="/lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
 
-	<body>
+    <body>
 
-		<div class="reveal">
+        <div class="reveal">
 
-			<!-- Any section element inside of this container is displayed as a slide -->
-			<div class="slides">
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
 
-				<section>
-					<h1 style="text-align: left;">Algorithm, <br />Review, <br />Sorting</h1>
-					<h3 style="text-align: right;">Merewood, Rowan</h3>
-				</section>
+                <section>
+                        <h1 style="text-align: left;">Alogrithms <small>Sorting &amp; Searching</small></h1>
+                    <h3 style="text-align: right;">Rowan Merewood</h3>
+                </section>
 
                 <section>
                     <h2>Let's start with the<br /><span style="font-size: 120%;">Big</span><br /> Philosophical Questions<h2>
@@ -56,6 +56,7 @@
     'github'   => 'https://github.com/rowan-m',
     'google+'  => 'https://plus.google.com/111813845727005160164',
     'identica' => 'http://identi.ca/rowanm',
+    'imdb'     => 'http://imdb.com/name/nm1412348',
     'twitter'  => 'https://twitter.com/rowan_m',
 ];</code></pre>
                 </section>
@@ -193,7 +194,7 @@
                     <h2>Insertion Sort <em style="font-size: 60%;">(cont.)</em></h2>
                     <h3>Iterations</h3>
 
-                    {{ render(app.request.baseUrl ~ '/sort/insertion?total=4&embedded=1') }}
+                    {{ render(app.request.baseUrl ~ '/sort/insertion?total=8&embedded=1') }}
 
                     <p class="fragment"><br /><em>Sorted!</em></p>
 
@@ -267,7 +268,7 @@ for ($index = count($elements); $index > 0; $index--) {
                     <h2>Bubble Sort <em style="font-size: 60%;">(cont.)</em></h2>
                     <h3>Iterations</h3>
 
-                    {{ render(app.request.baseUrl ~ '/sort/bubble?total=4&embedded=1') }}
+                    {{ render(app.request.baseUrl ~ '/sort/bubble?total=8&embedded=1') }}
 
                     <p class="fragment"><br /><em>Sorted!</em></p>
                 </section>
@@ -361,7 +362,7 @@ for ($index = count($elements); $index > 0; $index--) {
                     <h2>Quick Sort <em style="font-size: 60%;">(cont.)</em></h2>
                     <h3>Iterations</h3>
 
-                    {{ render(app.request.baseUrl ~ '/sort/quick?total=4&embedded=1') }}
+                    {{ render(app.request.baseUrl ~ '/sort/quick?total=8&embedded=1') }}
 
                     <p class="fragment"><br /><em>Sorted!</em></p>
                 </section>
@@ -423,7 +424,7 @@ for ($index = count($elements); $index > 0; $index--) {
                     <h2>Heap Sort <em style="font-size: 60%;">(cont.)</em></h2>
                     <h3>Iterations</h3>
 
-                    {{ render(app.request.baseUrl ~ '/sort/heap?total=4&embedded=1') }}
+                    {{ render(app.request.baseUrl ~ '/sort/heap?total=8&embedded=1') }}
 
                     <p class="fragment"><br /><em>Sorted!</em></p>
                 </section>
@@ -445,62 +446,145 @@ while($h->valid()) {
                 </section>
 
                 <section>
-                    <h1>Summing up</h1>
+                <h1>Searching Algorithms</h1>
                 </section>
 
                 <section>
-                    <h2>History</h2>
+                    <h2>Sequential Search</h2>
+                    <h3>Code</h3>
+                    <pre class="fragment language-php"><code contenteditable style="font-size: 70%;">class SequentialSearch {
+    public function search($target, array $elements) {
+        $iterations = count($elements);
+
+        for($index = 0; $index <= $iterations; $index++) {
+            if ($target == $elements[$index]) {
+                $this->notifyObservers(array($index));
+                return true;
+            }
+        }
+
+        return false;
+    }
+}</code></pre>
+                </section>
+
+                <section>
+                    <h2>Sequential Search <em style="font-size: 60%;">(cont.)</em></h2>
+                    <h3>Iterations</h3>
+
+                    {{ render(app.request.baseUrl ~ '/search/sequential?total=7&embedded=1') }}
+
+                    <p class="fragment"><br /><em>Found you!</em></p>
+                </section>
+
+                <section>
+                    <h2>Sequential Search <em style="font-size: 60%;">(cont.)</em></h2>
+                    <h3>Summary</h3>
                     <ul>
-                        <li class="fragment">Insertion Sort: optimised in 1959 (Shell Sort)</li>
-                        <li class="fragment">Bubble Sort: improved in 1980 (Comb Sort)</li>
-                        <li class="fragment">Quick Sort: developed in 1960 (C. A. R. Hoare)</li>
-                        <li class="fragment">Heap Sort: improved in the '60s (Robert Floyd)</li>
+                        <li class="fragment">Best case: &#x039f;(1)</li>
+                        <li class="fragment">Average / Worst case: &#x039f;(<em>n</em>)</li>
+                        <li class="fragment">Not as pointless as it looks...</li>
                     </ul>
-                    <p class="fragment"><br /><em>Oh, and there's Radix Sort used by Herman Hollerith in 1887</em></p>
                 </section>
 
                 <section>
-                    <h2>Combining algorithms</h2>
-                    <p class="fragment">Set a threshold in the quick sort algorithm so it swaps to insertion sort for smaller arrays</p>
+                    <h2>Binary Search</h2>
+                    <h3>Code</h3>
+                    <pre class="fragment language-php"><code contenteditable style="font-size: 70%;">class BinarySearch {
+    public function search($target, array $elements) {
+        return $this->doBinarySearch($target, $elements, 0, count($elements));
+    }
+
+    public function doBinarySearch($target, array $elements, $minIndex, $maxIndex) {
+        if ($maxIndex < $minIndex) { return false; }
+        $midIndex = floor(($minIndex + $maxIndex) / 2);
+        if ($elements[$midIndex] > $target) {
+            return $this->doBinarySearch($target, $elements, $minIndex, $midIndex - 1);
+        }
+        if ($elements[$midIndex] < $target) {
+            return $this->doBinarySearch($target, $elements, $midIndex + 1, $maxIndex);
+        }
+        return true;
+    }
+}</code></pre>
                 </section>
 
-				<section>
-					<h1>Thank you!</h1>
-                    <h3><a href="https://joind.in/7790">https://joind.in/7790</a></h3>
-				</section>
-			</div>
-		</div>
+                <section>
+                    <h2>Binary Search <em style="font-size: 60%;">(cont.)</em></h2>
+                    <h3>Iterations</h3>
 
-		<script src="/lib/js/head.min.js"></script>
-		<script src="/js/reveal.min.js"></script>
+                    {{ render(app.request.baseUrl ~ '/search/binary?total=13&embedded=1') }}
 
-		<script>
+                    <p class="fragment"><br /><em>Found you!</em></p>
+                </section>
 
-			// Full list of configuration options available here:
-			// https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				controls: true,
-				progress: true,
-				history: true,
-				center: true,
+                <section>
+                    <h2>Binary Search <em style="font-size: 60%;">(cont.)</em></h2>
+                    <h3>Summary</h3>
+                    <ul>
+                        <li class="fragment">Best case: &#x039f;(1)</li>
+                        <li class="fragment">Average / Worst case: &#x039f;(log <em>n</em>)</li>
+                        <li class="fragment">Switch to linear search for smaller partitions</li>
+                    </ul>
+                </section>
+
+                <section>
+                <h1>Summing up</h1>
+                </section>
+
+                <section>
+                <h2>History</h2>
+                <ul>
+                    <li class="fragment">Insertion Sort: optimised in 1959 (Shell Sort)</li>
+                    <li class="fragment">Bubble Sort: improved in 1980 (Comb Sort)</li>
+                    <li class="fragment">Quick Sort: developed in 1960 (C. A. R. Hoare)</li>
+                    <li class="fragment">Heap Sort: improved in the '60s (Robert Floyd)</li>
+                </ul>
+                <p class="fragment"><br /><em>Oh, and there's Radix Sort used by Herman Hollerith in 1887</em></p>
+                </section>
+
+                <section>
+                <h1>Thank you!</h1>
+                <h3><a href="https://joind.in/8454">joind.in/8454</a></h3>
+                </section>
+            </div>
+        </div>
+
+        <script src="/lib/js/head.min.js"></script>
+        <script src="/js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
                 rollingLinks: false,
 
-				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-				transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
 
-				// Optional libraries used to extend on reveal.js
-				dependencies: [
-					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
-					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
-				]
-			});
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+            Reveal.addEventListener( 'fragmentshown', function( event ) {
+                event.fragment.scrollIntoView( false );
+            } );
+            Reveal.addEventListener( 'fragmenthidden', function( event ) {
+                event.fragment.scrollIntoView( false );
+            } );
+        </script>
 
-		</script>
-
-	</body>
+    </body>
 </html>
