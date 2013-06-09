@@ -40,8 +40,8 @@ class MergeSort implements Algorithm, Observable
                 for ($scanIndex = $rightPartionStart - 1; $scanIndex >= $leftScanIndex; $scanIndex--) {
                     $swap = $elements[$scanIndex + 1];
                     $elements[$scanIndex + 1] = $elements[$scanIndex];
-                    $elements[$scanIndex] = $swap;
-                $this->notifyObservers($elements, array($leftScanIndex, $rightPartitionStart - 1));
+                    $elements[$scanIndex] = $swap; // not needed, but creates a nicer visual
+                    $this->notifyObservers($elements, array($leftScanIndex, $rightPartitionStart - 1));
                 }
 
                 $elements[$leftScanIndex] = $tmp;
