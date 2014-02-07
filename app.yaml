@@ -1,0 +1,21 @@
+application: algo-review-sort
+version: 1
+runtime: php
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /css
+  static_dir: web/css
+
+- url: /js
+  static_dir: web/fonts
+
+- url: /lib
+  static_dir: web/lib
+
+- url: /plugin
+  static_dir: web/plugin
+  
+- url: /.*
+  script: index.php
