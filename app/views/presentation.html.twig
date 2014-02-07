@@ -1,71 +1,57 @@
 <!doctype html>
 <html lang="en">
-
 <head>
 <meta charset="utf-8">
-
 <title>Algorithm, Review, Searching, Sorting</title>
-
-<meta name="description" content="Slides and demo app from Rowan's SunshinePHP 2014 talk.">
+<meta name="description"
+    content="Slides and demo app from Rowan's SunshinePHP 2014 talk.">
 <meta name="author" content="Rowan Merewood">
-
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style"
-	content="black-translucent" />
-
+    content="black-translucent" />
 <meta name="viewport"
-	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link rel="stylesheet" href="/css/reveal.min.css">
 <link rel="stylesheet" href="/css/theme/beige.css" id="theme">
-
 <!-- For syntax highlighting -->
 <link rel="stylesheet" href="lib/css/zenburn.css">
-
 <link rel="stylesheet" href="/css/sort-result.css">
-
 <!-- If the query includes 'print-pdf', use the PDF print sheet -->
 <script>
-			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-		</script>
-
+            document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
 <!--[if lt IE 9]>
-		<script src="lib/js/html5shiv.js"></script>
-		<![endif]-->
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
 </head>
-
 <body>
+    <div class="reveal">
+        <!-- Any section element inside of this container is displayed as a slide -->
+        <div class="slides">
 
-	<div class="reveal">
+            <section>
+                <h1 style="text-align: left;">
+                    Algorithms <small>Sorting &amp; Searching</small> <br /> <img
+                        alt="SunshinePHP 2014"
+                        src="http://2014.sunshinephp.com/img/sunshinephp_logo_2014_800px.png"
+                        style="border: 0; box-shadow: initial; background: initial;"
+                        width="40%">
+                </h1>
+                <h3 style="text-align: right;">Rowan Merewood</h3>
+            </section>
 
-		<!-- Any section element inside of this container is displayed as a slide -->
-		<div class="slides">
+            <section>
+                <h2>
+                    Let's start with the<br /> <span style="font-size: 120%;">Big</span><br />
+                    Philosophical Questions
+                    <h2>
+            </section>
 
-			<section>
-				<h1 style="text-align: left;">
-					Algorithms <small>Sorting &amp; Searching</small> <br /> <img
-						alt="SunshinePHP 2014"
-						src="http://2014.sunshinephp.com/img/sunshinephp_logo_2014_800px.png"
-						style="border: 0; box-shadow: initial; background: initial;"
-						width="40%">
-				</h1>
-
-				<h3 style="text-align: right;">Rowan Merewood</h3>
-			</section>
-
-			<section>
-				<h2>
-					Let's start with the<br /> <span style="font-size: 120%;">Big</span><br />
-					Philosophical Questions
-					<h2>
-			
-			</section>
-
-			<section>
-				<h2>Who am I?</h2>
-				<p class="fragment">Developer Advocate for Google</p>
-				<pre class="fragment language-php">
-					<code contenteditable style="font-size: 85%;">$social = [
+            <section>
+                <h2>Who am I?</h2>
+                <p class="fragment">Developer Advocate for Google</p>
+                <pre class="fragment language-php">
+                    <code contenteditable style="font-size: 85%;">$social = [
     'blog'     => 'http://merewood.org',
     'facebook' => $this->graphSearch('people i am stalking'),
     'github'   => 'https://github.com/rowan-m',
@@ -74,114 +60,109 @@
     'imdb'     => 'http://imdb.com/name/nm1412348',
     'twitter'  => 'https://twitter.com/rowan_m',
 ];</code>
-				</pre>
-			</section>
+                </pre>
+            </section>
 
-			<section>
-				<h2>Why am I here?</h2>
-				<ol>
-					<li class="fragment">Because straight-up, pure computer science is
-						<br /> <strong>AWESOME</strong>.
-					</li>
-					<li class="fragment"><pre style="font-size: 90%;">^EOF</pre>
-				
-				</ol>
-				<p class="fragment">
-					<br /> <em>Also, understanding the lower level detail helps you
-						make better use of the higher level abstractions.</em>
-				</p>
-			</section>
+            <section>
+                <h2>Why am I here?</h2>
+                <ol>
+                    <li class="fragment">Because straight-up, pure computer science is
+                        <br /> <strong>AWESOME</strong>.
+                    </li>
+                    <li class="fragment"><pre style="font-size: 90%;">^EOF</pre>
+                </ol>
+                <p class="fragment">
+                    <br /> <em>Also, understanding the lower level detail helps you
+                        make better use of the higher level abstractions.</em>
+                </p>
+            </section>
 
-			<section>
-				<h2>Why sort?</h2>
-				<ul>
-					<li class="fragment">Displaying lists to humans</li>
-					<li class="fragment">Categorising data</li>
-					<li class="fragment">Preparing data for merging</li>
-					<li class="fragment">Preparing data for searching</li>
-				</ul>
-				<p class="fragment">
-					<br /> <em>In general: to display or to prepare for another
-						operation.</em>
-				</p>
-			</section>
+            <section>
+                <h2>Why sort?</h2>
+                <ul>
+                    <li class="fragment">Displaying lists to humans</li>
+                    <li class="fragment">Categorising data</li>
+                    <li class="fragment">Preparing data for merging</li>
+                    <li class="fragment">Preparing data for searching</li>
+                </ul>
+                <p class="fragment">
+                    <br /> <em>In general: to display or to prepare for another
+                        operation.</em>
+                </p>
+            </section>
 
-			<section>
-				<h1>
-					Comparing<br /> Algorithms
-				</h1>
-			</section>
+            <section>
+                <h1>
+                    Comparing<br /> Algorithms
+                </h1>
+            </section>
 
-			<section>
-				<h2>Stability</h2>
+            <section>
+                <h2>Stability</h2>
+                <div style="float: left; width: 35%;">
+                    <h3>Stable</h3>
+                    {{ render(app.request.baseUrl ~ '/example/stable?embedded=1') }}
+                </div>
+                <div style="float: right; width: 55%;">
+                    <h3>Unstable</h3>
+                    {{ render(app.request.baseUrl ~ '/example/unstable?embedded=1') }}
+                </div>
+                <div class="fragment" style="float: left; width: 35%;">
+                    <p>
+                        <em>Order of unsorted portion maintained</em>
+                    </p>
+                </div>
+                <div class="fragment" style="float: right; width: 55%;">
+                    <p>
+                        <em>Order of unsorted portion may change</em>
+                    </p>
+                </div>
+            </section>
 
-				<div style="float: left; width: 35%;">
-					<h3>Stable</h3>
-					{{ render(app.request.baseUrl ~ '/example/stable?embedded=1') }}
-				</div>
+            <section>
+                <h2>Big O Notation</h2>
+                <p class="fragment">
+                    <em>Rate of growth for resource usage based on the size of its
+                        input.</em><br />
+                </p>
+                <ul>
+                    <li class="fragment">Resource usage: <em>CPU cycles / time, memory
+                            usage</em></li>
+                    <li class="fragment">Size of input: <em>number of elements</em></li>
+                </ul>
+            </section>
 
-				<div style="float: right; width: 55%;">
-					<h3>Unstable</h3>
-					{{ render(app.request.baseUrl ~ '/example/unstable?embedded=1') }}
-				</div>
+            <section>
+                <h2>
+                    Big O Notation <em style="font-size: 60%;">(cont.)</em>
+                </h2>
+                <ul>
+                    <li class="fragment">&#x039f;(1): <em>Constant</em></li>
+                    <li class="fragment">&#x039f;(<em>n</em>): <em>Linear growth</em></li>
+                    <li class="fragment">&#x039f;(<em>n</em> log <em>n</em>): <em>Logarithmic
+                            growth</em></li>
+                    <li class="fragment">&#x039f;(<em>n</em><sup style="font-size: 60%">2</sup>):
+                        <em>Quadratic growth</em></li>
+                </ul>
+            </section>
 
-				<div class="fragment" style="float: left; width: 35%;">
-					<p>
-						<em>Order of unsorted portion maintained</em>
-					</p>
-				</div>
+            <section>
+                <h2>Adaptability</h2>
+                <p class="fragment">An adaptive algorithm has better performance
+                    when the list is already partially sorted</p>
+            </section>
 
-				<div class="fragment" style="float: right; width: 55%;">
-					<p>
-						<em>Order of unsorted portion may change</em>
-					</p>
-				</div>
-			</section>
+            <section>
+                <h1>
+                    Sorting <br />Algorithms
+                </h1>
+            </section>
 
-			<section>
-				<h2>Big O Notation</h2>
-				<p class="fragment">
-					<em>Rate of growth for resource usage based on the size of its
-						input.</em><br />
-				</p>
-				<ul>
-					<li class="fragment">Resource usage: <em>CPU cycles / time, memory
-							usage</em></li>
-					<li class="fragment">Size of input: <em>number of elements</em></li>
-				</ul>
-			</section>
-
-			<section>
-				<h2>
-					Big O Notation <em style="font-size: 60%;">(cont.)</em>
-				</h2>
-				<ul>
-					<li class="fragment">&#x039f;(1): <em>Constant</em></li>
-					<li class="fragment">&#x039f;(<em>n</em>): <em>Linear growth</em></li>
-					<li class="fragment">&#x039f;(<em>n</em> log <em>n</em>): <em>Logarithmic
-							growth</em></li>
-					<li class="fragment">&#x039f;(<em>n</em><sup style="font-size: 60%">2</sup>):
-						<em>Quadratic growth</em></li>
-				</ul>
-			</section>
-
-			<section>
-				<h2>Adaptability</h2>
-				<p class="fragment">An adaptive algorithm has better performance
-					when the list is already partially sorted</p>
-			</section>
-
-			<section>
-				<h1>
-					Sorting <br />Algorithms
-				</h1>
-			</section>
-
-			<section>
-				<h2>Insertion Sort</h2>
-				<h3>Code</h3>
-				<pre class="fragment language-php">
-					<code contenteditable style="font-size: 70%;">class InsertionSort {
+            <section>
+                <h2>Insertion Sort</h2>
+                <h3>Code</h3>
+                <pre class="fragment language-php">
+                    <code contenteditable style="font-size: 70%;">class InsertionSort {
     public function sort(array $elements) {
         $iterations = count($elements);
         for ($index = 1; $index < $iterations; $index++) {
@@ -197,16 +178,16 @@
         return $elements;
     }
 }</code>
-				</pre>
-			</section>
+                </pre>
+            </section>
 
-			<section>
-				<h2>
-					Insertion Sort <em style="font-size: 60%;">(cont.)</em>
-				</h2>
-				<h3>Code: Iterate through the list</h3>
-				<pre class="language-php">
-					<code contenteditable style="font-size: 70%; margin-top: 20px;">public function sort(array $elements) {
+            <section>
+                <h2>
+                    Insertion Sort <em style="font-size: 60%;">(cont.)</em>
+                </h2>
+                <h3>Code: Iterate through the list</h3>
+                <pre class="language-php">
+                    <code contenteditable style="font-size: 70%; margin-top: 20px;">public function sort(array $elements) {
     // At least one iteration per element
     $iterations = count($elements);
 
@@ -215,16 +196,16 @@
         // algorithm is O(n)
     }
 }</code>
-				</pre>
-			</section>
+                </pre>
+            </section>
 
-			<section>
-				<h2>
-					Insertion Sort <em style="font-size: 60%;">(cont.)</em>
-				</h2>
-				<h3>Code: Compare elements</h3>
-				<pre class="language-php" style="box-shadow: none;">
-					<code contenteditable style="font-size: 70%; margin-top: 20px;">for ($index = 1; $index < $iterations; $index++) {
+            <section>
+                <h2>
+                    Insertion Sort <em style="font-size: 60%;">(cont.)</em>
+                </h2>
+                <h3>Code: Compare elements</h3>
+                <pre class="language-php" style="box-shadow: none;">
+                    <code contenteditable style="font-size: 70%; margin-top: 20px;">for ($index = 1; $index < $iterations; $index++) {
     // "Pick up" the current element and its position
     $elementToInsert = $elements[$index];
     $insertIndex = $index;
@@ -238,76 +219,48 @@
         $insertIndex--;
     }
 }</code>
-				</pre>
-				<p class="fragment">
-					If the list is in order, the
-					<code style="font-size: 70%;">while</code>
-					loop is not entered.
-				</p>
-			</section>
+                </pre>
+                <p class="fragment">
+                    If the list is in order, the
+                    <code style="font-size: 70%;">while</code>
+                    loop is not entered.
+                </p>
+            </section>
 
-			<section>
-				<h2>
-					Insertion Sort <em style="font-size: 60%;">(cont.)</em>
-				</h2>
-				<h3>Iterations</h3>
+            <section>
+                <h2>
+                    Insertion Sort <em style="font-size: 60%;">(cont.)</em>
+                </h2>
+                <h3>Iterations</h3>
 
-				{{ render(app.request.baseUrl ~
-				'/sort/insertion?total=8&embedded=1') }}
+                {{ render(app.request.baseUrl ~
+                '/sort/insertion?total=8&embedded=1') }}
 
-				<p class="fragment">
-					<br /> <em>Sorted!</em>
-				</p>
+                <p class="fragment">
+                    <br /> <em>Sorted!</em>
+                </p>
+            </section>
 
-			</section>
+            <section>
+                <h2>
+                    Insertion Sort <em style="font-size: 60%;">(cont.)</em>
+                </h2>
+                <h3>Summary</h3>
+                <ul>
+                    <li class="fragment">Best case: &#x039f;(<em>n</em>)
+                    </li>
+                    <li class="fragment">Average / worst case: &#x039f;(<em>n</em><sup>2</sup>)
+                    <li class="fragment">Memory usage: &#x039f;(<em>n</em>)
+                    </li>
+                    <li class="fragment">Adaptive, stable, in place, and on line</li>
+                </ul>
+            </section>
 
-			<section>
-				<h2>
-					Insertion Sort <em style="font-size: 60%;">(cont.)</em>
-				</h2>
-				<h3>Summary</h3>
-				<ul>
-					<li class="fragment">Best case: &#x039f;(<em>n</em>)
-					</li>
-					<li class="fragment">Average / worst case: &#x039f;(<em>n</em><sup>2</sup>)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-					
-					
-					<li class="fragment">Memory usage: &#x039f;(<em>n</em>)
-					</li>
-					<li class="fragment">Adaptive, stable, in place, and on line(<em>n</em>)
-					</li>
-				</ul>
-			</section>
-
-			<section>
-				<h2>Bubble Sort</h2>
-				<h3>Code</h3>
-				<pre class="fragment language-php">
-					<code contenteditable style="font-size: 70%;">class BubbleSort {
+            <section>
+                <h2>Bubble Sort</h2>
+                <h3>Code</h3>
+                <pre class="fragment language-php">
+                    <code contenteditable style="font-size: 70%;">class BubbleSort {
     public function sort(array $elements) {
         for ($index = count($elements); $index > 0; $index--) {
             $swapped = false;
@@ -323,32 +276,32 @@
         }
     }
 }</code>
-				</pre>
-			</section>
+                </pre>
+            </section>
 
-			<section>
-				<h2>
-					Bubble Sort <em style="font-size: 60%;">(cont.)</em>
-				</h2>
-				<h3>Code: Iterate through the list</h3>
-				<pre class="language-php">
-					<code contenteditable style="font-size: 70%;">// Iterate through the elements
+            <section>
+                <h2>
+                    Bubble Sort <em style="font-size: 60%;">(cont.)</em>
+                </h2>
+                <h3>Code: Iterate through the list</h3>
+                <pre class="language-php">
+                    <code contenteditable style="font-size: 70%;">// Iterate through the elements
 for ($index = count($elements); $index > 0; $index--) {
     $swapped = false;
     // Swap out of order elements
     // until there's nothing left to swap
     if (!$swapped) { return $elements; }
 }</code>
-				</pre>
-			</section>
+                </pre>
+            </section>
 
-			<section>
-				<h2>
-					Bubble Sort <em style="font-size: 60%;">(cont.)</em>
-				</h2>
-				<h3>Code</h3>
-				<pre class="fragment language-php">
-					<code contenteditable style="font-size: 70%;">for ($index = count($elements); $index > 0; $index--) {
+            <section>
+                <h2>
+                    Bubble Sort <em style="font-size: 60%;">(cont.)</em>
+                </h2>
+                <h3>Code</h3>
+                <pre class="fragment language-php">
+                    <code contenteditable style="font-size: 70%;">for ($index = count($elements); $index > 0; $index--) {
     $swapped = false;
     // Iterate through the unsorted portion of the list
     for ($swapIndex = 0; $swapIndex < $index - 1; $swapIndex++) {
@@ -362,84 +315,59 @@ for ($index = count($elements); $index > 0; $index--) {
     }
     if (!$swapped) { return $elements; }
 }</code>
-				</pre>
-				<p class="fragment">
-					If the list is in order, then
-					<code style="font-size: 70%;">$swapped</code>
-					stays
-					<code>false</code>
-					.
-				</p>
-			</section>
+                </pre>
+                <p class="fragment">
+                    If the list is in order, then
+                    <code style="font-size: 70%;">$swapped</code>
+                    stays
+                    <code>false</code>
+                    .
+                </p>
+            </section>
 
-			<section>
-				<h2>
-					Bubble Sort <em style="font-size: 60%;">(cont.)</em>
-				</h2>
-				<h3>Iterations</h3>
+            <section>
+                <h2>
+                    Bubble Sort <em style="font-size: 60%;">(cont.)</em>
+                </h2>
+                <h3>Iterations</h3>
 
-				{{ render(app.request.baseUrl ~ '/sort/bubble?total=8&embedded=1')
-				}}
+                {{ render(app.request.baseUrl ~ '/sort/bubble?total=8&embedded=1')
+                }}
 
-				<p class="fragment">
-					<br /> <em>Sorted!</em>
-				</p>
-			</section>
+                <p class="fragment">
+                    <br /> <em>Sorted!</em>
+                </p>
+            </section>
 
-			<section>
-				<h2>
-					Bubble Sort <em style="font-size: 60%;">(cont.)</em>
-				</h2>
-				<h3>Summary</h3>
-				<ul>
-					<li class="fragment">Best case: &#x039f;(<em>n</em>)
-					</li>
-					<li class="fragment">Average / worst case: &#x039f;(<em>n</em><sup>2</sup>)
+            <section>
+                <h2>
+                    Bubble Sort <em style="font-size: 60%;">(cont.)</em>
+                </h2>
+                <h3>Summary</h3>
+                <ul>
+                    <li class="fragment">Best case: &#x039f;(<em>n</em>)
+                    </li>
+                    <li class="fragment">Average / worst case: &#x039f;(<em>n</em><sup>2</sup>)
+                    <li class="fragment">Memory usage: &#x039f;(<em>n</em>)
+                    </li>
+                </ul>
+            </section>
 
+            <section>
+                <h2>
+                    Bubble Sort <em style="font-size: 60%;">(cont.)</em>
+                </h2>
+                <h3>The ugly Knuth</h3>
+                <blockquote class="fragment">The bubble sort seems to have nothing
+                    to recommend it, except a catchy name and the fact that it leads to
+                    some interesting theoretical problems</blockquote>
+            </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-					
-					
-					<li class="fragment">Memory usage: &#x039f;(<em>n</em>)
-					</li>
-				</ul>
-			</section>
-
-			<section>
-				<h2>
-					Bubble Sort <em style="font-size: 60%;">(cont.)</em>
-				</h2>
-				<h3>The ugly Knuth</h3>
-				<blockquote class="fragment">The bubble sort seems to have nothing
-					to recommend it, except a catchy name and the fact that it leads to
-					some interesting theoretical problems</blockquote>
-			</section>
-			<section>
-				<h2>Quick Sort</h2>
-				<h3>Code</h3>
-				<pre class="fragment language-php">
-					<code contenteditable style="font-size: 70%;">class QuickSort {
+            <section>
+                <h2>Quick Sort</h2>
+                <h3>Code</h3>
+                <pre class="fragment language-php">
+                    <code contenteditable style="font-size: 70%;">class QuickSort {
     public function sort(array $elements) {
         $this->doQuickSort($elements, 0, count($elements) - 1);
         return $elements;
@@ -452,16 +380,16 @@ for ($index = count($elements); $index > 0; $index--) {
         // Recursively repeat the same operation on both arrays
     }
 }</code>
-				</pre>
-			</section>
+                </pre>
+            </section>
 
-			<section>
-				<h2>
-					Quick Sort <em style="font-size: 60%;">(cont.)</em>
-				</h2>
-				<h3>Code: Create a pivot</h3>
-				<pre class="language-php">
-					<code contenteditable style="font-size: 70%;">function doQuickSort($elements, $leftIndex, $rightIndex) {
+            <section>
+                <h2>
+                    Quick Sort <em style="font-size: 60%;">(cont.)</em>
+                </h2>
+                <h3>Code: Create a pivot</h3>
+                <pre class="language-php">
+                    <code contenteditable style="font-size: 70%;">function doQuickSort($elements, $leftIndex, $rightIndex) {
     // Divide the array in two, creating a “pivot” value
     $pivotIndex = ceil($leftIndex + (($rightIndex - $leftIndex) / 2));
     $pivotElement = $elements[$pivotIndex];
@@ -473,15 +401,15 @@ for ($index = count($elements); $index > 0; $index--) {
         // Swap them
     }
 }</code>
-				</pre>
-			</section>
-			<section>
-				<h2>
-					Quick Sort <em style="font-size: 60%;">(cont.)</em>
-				</h2>
-				<h3>Code: Swap values</h3>
-				<pre class="language-php">
-					<code contenteditable style="font-size: 70%;">while ($leftSwapIndex <= $rightSwapIndex) {
+                </pre>
+            </section>
+            <section>
+                <h2>
+                    Quick Sort <em style="font-size: 60%;">(cont.)</em>
+                </h2>
+                <h3>Code: Swap values</h3>
+                <pre class="language-php">
+                    <code contenteditable style="font-size: 70%;">while ($leftSwapIndex <= $rightSwapIndex) {
     // Move the left index until we find an out of order element
     while ($elements[$leftSwapIndex] < $pivotElement) { $leftSwapIndex++; }
     // Move the right index until we find an out of order element
@@ -495,16 +423,16 @@ for ($index = count($elements); $index > 0; $index--) {
         $rightSwapIndex--;
     }
 }</code>
-				</pre>
-			</section>
+                </pre>
+            </section>
 
-			<section>
-				<h2>
-					Quick Sort <em style="font-size: 60%;">(cont.)</em>
-				</h2>
-				<h3>Code: Recurse</h3>
-				<pre class="language-php">
-					<code contenteditable style="font-size: 70%;">function doQuickSort($elements, $leftIndex, $rightIndex) {
+            <section>
+                <h2>
+                    Quick Sort <em style="font-size: 60%;">(cont.)</em>
+                </h2>
+                <h3>Code: Recurse</h3>
+                <pre class="language-php">
+                    <code contenteditable style="font-size: 70%;">function doQuickSort($elements, $leftIndex, $rightIndex) {
     // Divide the array in two, creating a “pivot” value
     // Move any value lower than the pivot to the left array
     // Move any value higher than the pivot to the right array
@@ -516,42 +444,42 @@ for ($index = count($elements); $index > 0; $index--) {
         $this->doQuickSort($elements, $leftSwapIndex, $rightIndex);
     }
 }</code>
-				</pre>
-			</section>
+                </pre>
+            </section>
 
-			<section>
-				<h2>
-					Quick Sort <em style="font-size: 60%;">(cont.)</em>
-				</h2>
-				<h3>Iterations</h3>
+            <section>
+                <h2>
+                    Quick Sort <em style="font-size: 60%;">(cont.)</em>
+                </h2>
+                <h3>Iterations</h3>
 
-				{{ render(app.request.baseUrl ~ '/sort/quick?total=8&embedded=1') }}
+                {{ render(app.request.baseUrl ~ '/sort/quick?total=8&embedded=1') }}
 
-				<p class="fragment">
-					<br /> <em>Sorted!</em>
-				</p>
-			</section>
+                <p class="fragment">
+                    <br /> <em>Sorted!</em>
+                </p>
+            </section>
 
-			<section>
-				<h2>
-					Quick Sort <em style="font-size: 60%;">(cont.)</em>
-				</h2>
-				<h3>Summary</h3>
-				<ul>
-					<li class="fragment">Best / average case: &#x039f;(<em>n</em> log <em>n</em>)
-					</li>
-					<li class="fragment">Worst case: &#x039f;(<em>n</em><sup>2</sup>)
-					</li>
-					<li class="fragment">Implemented by <code>sort()</code></li>
-					<li class="fragment">Easily parallelized</li>
-				</ul>
-			</section>
+            <section>
+                <h2>
+                    Quick Sort <em style="font-size: 60%;">(cont.)</em>
+                </h2>
+                <h3>Summary</h3>
+                <ul>
+                    <li class="fragment">Best / average case: &#x039f;(<em>n</em> log <em>n</em>)
+                    </li>
+                    <li class="fragment">Worst case: &#x039f;(<em>n</em><sup>2</sup>)
+                    </li>
+                    <li class="fragment">Implemented by <code>sort()</code></li>
+                    <li class="fragment">Easily parallelized</li>
+                </ul>
+            </section>
 
-			<section>
-				<h2>Heap Sort</h2>
-				<h3>Code</h3>
-				<pre class=" fragment language-php">
-					<code contenteditable style="font-size: 70%;">class HeapSort {
+            <section>
+                <h2>Heap Sort</h2>
+                <h3>Code</h3>
+                <pre class=" fragment language-php">
+                    <code contenteditable style="font-size: 70%;">class HeapSort {
     public function sort(array $elements) {
         $size = count($elements);
         for ($index = floor(($size / 2)) - 1; $index >= 0; $index--) {
@@ -566,16 +494,16 @@ for ($index = count($elements); $index > 0; $index--) {
         return $elements;
     }
 }</code>
-				</pre>
-			</section>
+                </pre>
+            </section>
 
-			<section>
-				<h2>
-					Heap Sort <em style="font-size: 60%;">(cont.)</em>
-				</h2>
-				<h3>Code: Sift the heap</h3>
-				<pre class="language-php">
-					<code contenteditable style="font-size: 70%;">public function siftDown(array $elements, $root, $bottom) {
+            <section>
+                <h2>
+                    Heap Sort <em style="font-size: 60%;">(cont.)</em>
+                </h2>
+                <h3>Code: Sift the heap</h3>
+                <pre class="language-php">
+                    <code contenteditable style="font-size: 70%;">public function siftDown(array $elements, $root, $bottom) {
     $done = false;
     while (($root * 2 <= $bottom) && (!$done)) {
         if ($root * 2 == $bottom) $maxChild = $root * 2;
@@ -592,53 +520,53 @@ for ($index = count($elements); $index > 0; $index--) {
     }
     return $elements;
 }</code>
-				</pre>
-			</section>
+                </pre>
+            </section>
 
-			<section>
-				<h2>
-					Heap Sort <em style="font-size: 60%;">(cont.)</em>
-				</h2>
-				<h3>Iterations</h3>
+            <section>
+                <h2>
+                    Heap Sort <em style="font-size: 60%;">(cont.)</em>
+                </h2>
+                <h3>Iterations</h3>
 
-				{{ render(app.request.baseUrl ~ '/sort/heap?total=8&embedded=1') }}
+                {{ render(app.request.baseUrl ~ '/sort/heap?total=8&embedded=1') }}
 
-				<p class="fragment">
-					<br /> <em>Sorted!</em>
-				</p>
-			</section>
+                <p class="fragment">
+                    <br /> <em>Sorted!</em>
+                </p>
+            </section>
 
-			<section>
-				<h2>
-					Heap Sort <em style="font-size: 60%;">(cont.)</em>
-				</h2>
-				<h3>Summary</h3>
-				<ul>
-					<li class="fragment">Best / average / worst case: &#x039f;(<em>n</em>
-						log <em>n</em>)
-					</li>
-					<li class="fragment">Implemented by <code>SplMinHeap()</code></li>
-				</ul>
-				<pre class="fragment language-php">
-					<code contenteditable style="font-size: 70%;">$h = new SplMinHeap();
+            <section>
+                <h2>
+                    Heap Sort <em style="font-size: 60%;">(cont.)</em>
+                </h2>
+                <h3>Summary</h3>
+                <ul>
+                    <li class="fragment">Best / average / worst case: &#x039f;(<em>n</em>
+                        log <em>n</em>)
+                    </li>
+                    <li class="fragment">Implemented by <code>SplMinHeap()</code></li>
+                </ul>
+                <pre class="fragment language-php">
+                    <code contenteditable style="font-size: 70%;">$h = new SplMinHeap();
 foreach ($unsorted as $val) $h->insert($val);
 $h->top();
 while($h->valid()) {
     echo $h->current()."\n";
     $h->next();
 }</code>
-				</pre>
-			</section>
+                </pre>
+            </section>
 
-			<section>
-				<h1>Searching Algorithms</h1>
-			</section>
+            <section>
+                <h1>Searching Algorithms</h1>
+            </section>
 
-			<section>
-				<h2>Sequential Search</h2>
-				<h3>Code</h3>
-				<pre class="fragment language-php">
-					<code contenteditable style="font-size: 70%;">class SequentialSearch {
+            <section>
+                <h2>Sequential Search</h2>
+                <h3>Code</h3>
+                <pre class="fragment language-php">
+                    <code contenteditable style="font-size: 70%;">class SequentialSearch {
     public function search($target, array $elements) {
         $iterations = count($elements);
 
@@ -652,41 +580,41 @@ while($h->valid()) {
         return false;
     }
 }</code>
-				</pre>
-			</section>
+                </pre>
+            </section>
 
-			<section>
-				<h2>
-					Sequential Search <em style="font-size: 60%;">(cont.)</em>
-				</h2>
-				<h3>Iterations</h3>
+            <section>
+                <h2>
+                    Sequential Search <em style="font-size: 60%;">(cont.)</em>
+                </h2>
+                <h3>Iterations</h3>
 
-				{{ render(app.request.baseUrl ~
-				'/search/sequential?total=7&embedded=1') }}
+                {{ render(app.request.baseUrl ~
+                '/search/sequential?total=7&embedded=1') }}
 
-				<p class="fragment">
-					<br /> <em>Found you!</em>
-				</p>
-			</section>
+                <p class="fragment">
+                    <br /> <em>Found you!</em>
+                </p>
+            </section>
 
-			<section>
-				<h2>
-					Sequential Search <em style="font-size: 60%;">(cont.)</em>
-				</h2>
-				<h3>Summary</h3>
-				<ul>
-					<li class="fragment">Best case: &#x039f;(1)</li>
-					<li class="fragment">Average / Worst case: &#x039f;(<em>n</em>)
-					</li>
-					<li class="fragment">Not as pointless as it looks...</li>
-				</ul>
-			</section>
+            <section>
+                <h2>
+                    Sequential Search <em style="font-size: 60%;">(cont.)</em>
+                </h2>
+                <h3>Summary</h3>
+                <ul>
+                    <li class="fragment">Best case: &#x039f;(1)</li>
+                    <li class="fragment">Average / Worst case: &#x039f;(<em>n</em>)
+                    </li>
+                    <li class="fragment">Not as pointless as it looks...</li>
+                </ul>
+            </section>
 
-			<section>
-				<h2>Binary Search</h2>
-				<h3>Code</h3>
-				<pre class="fragment language-php">
-					<code contenteditable style="font-size: 70%;">class BinarySearch {
+            <section>
+                <h2>Binary Search</h2>
+                <h3>Code</h3>
+                <pre class="fragment language-php">
+                    <code contenteditable style="font-size: 70%;">class BinarySearch {
     public function search($target, array $elements) {
         return $this->doBinarySearch($target, $elements, 0, count($elements));
     }
@@ -703,126 +631,126 @@ while($h->valid()) {
         return true;
     }
 }</code>
-				</pre>
-			</section>
+                </pre>
+                </section>
 
-			<section>
-				<h2>
-					Binary Search <em style="font-size: 60%;">(cont.)</em>
-				</h2>
-				<h3>Iterations</h3>
+                <section>
+                <h2>
+                    Binary Search <em style="font-size: 60%;">(cont.)</em>
+                </h2>
+                <h3>Iterations</h3>
 
-				{{ render(app.request.baseUrl ~
-				'/search/binary?total=13&embedded=1') }}
+                {{ render(app.request.baseUrl ~
+                '/search/binary?total=13&embedded=1') }}
 
-				<p class="fragment">
-					<br /> <em>Found you!</em>
-				</p>
-			</section>
+                <p class="fragment">
+                <br /> <em>Found you!</em>
+                </p>
+                </section>
 
-			<section>
-				<h2>
-					Binary Search <em style="font-size: 60%;">(cont.)</em>
-				</h2>
-				<h3>Summary</h3>
-				<ul>
-					<li class="fragment">Best case: &#x039f;(1)</li>
-					<li class="fragment">Average / Worst case: &#x039f;(log <em>n</em>)
-					</li>
-					<li class="fragment">Switch to linear search for smaller partitions</li>
-				</ul>
-			</section>
+                <section>
+                <h2>
+                    Binary Search <em style="font-size: 60%;">(cont.)</em>
+                </h2>
+                <h3>Summary</h3>
+                <ul>
+                    <li class="fragment">Best case: &#x039f;(1)</li>
+                    <li class="fragment">Average / Worst case: &#x039f;(log <em>n</em>)
+                    </li>
+                    <li class="fragment">Switch to linear search for smaller partitions</li>
+                </ul>
+                </section>
 
-			<section>
-				<h1>Summing up</h1>
-			</section>
+                <section>
+                <h1>Summing up</h1>
+                </section>
 
-			<section>
-				<h2>History</h2>
-				<ul>
-					<li class="fragment">Insertion Sort: optimised in 1959 (Shell Sort)</li>
-					<li class="fragment">Bubble Sort: improved in 1980 (Comb Sort)</li>
-					<li class="fragment">Quick Sort: developed in 1960 (C. A. R. Hoare)</li>
-					<li class="fragment">Heap Sort: improved in the '60s (Robert Floyd)</li>
-				</ul>
-				<p class="fragment">
-					<br /> <em>Oh, and there's Radix Sort used by Herman Hollerith in
-						1887</em>
-				</p>
-			</section>
+                <section>
+                <h2>History</h2>
+                <ul>
+                    <li class="fragment">Insertion Sort: optimised in 1959 (Shell Sort)</li>
+                    <li class="fragment">Bubble Sort: improved in 1980 (Comb Sort)</li>
+                    <li class="fragment">Quick Sort: developed in 1960 (C. A. R. Hoare)</li>
+                    <li class="fragment">Heap Sort: improved in the '60s (Robert Floyd)</li>
+                </ul>
+                <p class="fragment">
+                <br /> <em>Oh, and there's Radix Sort used by Herman Hollerith in
+                    1887</em>
+                </p>
+                </section>
 
-			<section>
-				<h1>Thank you!</h1>
-				<h3>
-					<a href="https://joind.in/10507">joind.in/10507</a><br /> <a
-						href="https://github.com/rowan-m/algo-review-sort">github.com/rowan-m/algo-review-sort</a><br />
-					<a href="http://algo-review-sort.appspot.com/">algo-review-sort.appspot.com</a>
-				</h3>
-				<img width="30%"
-					src="http://chart.apis.google.com/chart?chs=400x400&cht=qr&chl=https%3A%2F%2Fjoind.in%2F%2F10507" />
-			</section>
+                <section>
+                <h1>Thank you!</h1>
+                <h3>
+                    <a href="https://joind.in/10507">joind.in/10507</a><br /> <a
+                        href="https://github.com/rowan-m/algo-review-sort">github.com/rowan-m/algo-review-sort</a><br />
+                    <a href="http://algo-review-sort.appspot.com/">algo-review-sort.appspot.com</a>
+                </h3>
+                <img width="30%"
+                src="http://chart.apis.google.com/chart?chs=400x400&cht=qr&chl=https%3A%2F%2Fjoind.in%2F%2F10507" />
+                </section>
 
-			<section>
-				<h1>Share and enjoy!</h1>
-				<ul>
-					<li><a href="/sort/insertion"><tt>/sort/insertion</tt></a></li>
-					<li><a href="/sort/bubble"><tt>/sort/bubble</tt></a></li>
-					<li><a href="/sort/quick"><tt>/sort/quick</tt></a></li>
-					<li><a href="/sort/heap"><tt>/sort/heap</tt></a></li>
-					<li><a href="/sort/merge"><tt>/sort/merge</tt></a></li>
-					<li><a href="/search/sequential"><tt>/search/sequential</tt></a></li>
-					<li><a href="/search/binary"><tt>/search/binary</tt></a></li>
-				</ul>
-				<style type="text/css">
-#share-button {
-	padding: 10px;
-	background: #fff;
-	cursor: pointer;
-	line-height: 20px;
-	border: 1px solid #e6e6e6;
-	border-radius: 4px;
-	font-size: 60%;
-}
+                <section>
+                <h1>Share and enjoy!</h1>
+                <ul>
+                    <li><a href="/sort/insertion"><tt>/sort/insertion</tt></a></li>
+                    <li><a href="/sort/bubble"><tt>/sort/bubble</tt></a></li>
+                    <li><a href="/sort/quick"><tt>/sort/quick</tt></a></li>
+                    <li><a href="/sort/heap"><tt>/sort/heap</tt></a></li>
+                    <li><a href="/sort/merge"><tt>/sort/merge</tt></a></li>
+                    <li><a href="/search/sequential"><tt>/search/sequential</tt></a></li>
+                    <li><a href="/search/binary"><tt>/search/binary</tt></a></li>
+                </ul>
+                <style type="text/css">
+                    #share-button {
+                        padding: 10px;
+                        background: #fff;
+                        cursor: pointer;
+                        line-height: 20px;
+                        border: 1px solid #e6e6e6;
+                        border-radius: 4px;
+                        font-size: 60%;
+                    }
 
-#share-button .icon {
-	width: 20px;
-	height: 20px;
-	display: inline-block;
-	background: url('https://developers.google.com/+/images/branding/btn_icons_sprite.png')
-		transparent 0 -40px no-repeat;
-}
+                    #share-button .icon {
+                        width: 20px;
+                        height: 20px;
+                        display: inline-block;
+                        background:
+                        url('https://developers.google.com/+/images/branding/btn_icons_sprite.png')
+                        transparent 0 -40px no-repeat;
+                    }
 
-#share-button:hover {
-	background-color: #cc3732;
-	color: #fff;
-	border: #dd4b39;
-}
+                    #share-button:hover {
+                        background-color: #cc3732;
+                        color: #fff;
+                        border: #dd4b39;
+                    }
 
-#share-button:hover .icon {
-	background: url('https://developers.google.com/+/images/branding/btn_icons_sprite.png')
-		transparent 0 0px no-repeat;
-}
-</style>
-				<p>
-				<br />
-					<span id="share-button" class="g-interactivepost"
-						data-clientid="1083246276802-vhcqfgbojm7slagn5unkhdg0qnpfm0io.apps.googleusercontent.com"
-						data-contenturl="http://algo-review-sort.appspot.com/"
-						data-calltoactionlabel="TRY_IT"
-						data-calltoactionurl="http://algo-review-sort.appspot.com/#/"
-						data-cookiepolicy="single_host_origin"
-						data-prefilltext="Sorting and searching algorithms from SunshinePHP 2014 #ssp14"> <span
-						class="icon">&nbsp;</span> <span class="label">Share!</span>
-					</span>
-				</p>
-			</section>
-		</div>
-	</div>
+                    #share-button:hover .icon {
+                        background:
+                        url('https://developers.google.com/+/images/branding/btn_icons_sprite.png')
+                        transparent 0 0px no-repeat;
+                    }
+                </style>
+                <p>
+                <br /> <span id="share-button" class="g-interactivepost"
+                    data-clientid="1083246276802-vhcqfgbojm7slagn5unkhdg0qnpfm0io.apps.googleusercontent.com"
+                    data-contenturl="http://algo-review-sort.appspot.com/"
+                    data-calltoactionlabel="TRY_IT"
+                    data-calltoactionurl="http://algo-review-sort.appspot.com/#/"
+                    data-cookiepolicy="single_host_origin"
+                    data-prefilltext="Sorting and searching algorithms from SunshinePHP 2014 #ssp14">
+                    <span class="icon">&nbsp;</span> <span class="label">Share!</span>
+                </span>
+                </p>
+                </section>
+            </div>
+        </div>
 
-	<script src="/lib/js/head.min.js"></script>
-	<script src="/js/reveal.min.js"></script>
-
-	<script>
+        <script src="/lib/js/head.min.js"></script>
+        <script src="/js/reveal.min.js"></script>
+        <script>
 
             // Full list of configuration options available here:
             // https://github.com/hakimel/reveal.js#configuration
@@ -836,15 +764,15 @@ while($h->valid()) {
                 theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
                 transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
 
-				// Optional libraries used to extend on reveal.js
-				dependencies: [
-					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
-				]
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
             });
             Reveal.addEventListener( 'fragmentshown', function( event ) {
                 event.fragment.scrollIntoView( false );
@@ -853,12 +781,12 @@ while($h->valid()) {
                 event.fragment.scrollIntoView( false );
             } );
         </script>
-	<script type="text/javascript">
-  (function() {
-   var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-   po.src = 'https://apis.google.com/js/client:plusone.js';
-   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
- })();
-</script>
-</body>
-</html>
+        <script type="text/javascript">
+            (function() {
+             var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+             po.src = 'https://apis.google.com/js/client:plusone.js';
+             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+             })();
+         </script>
+     </body>
+ </html>
