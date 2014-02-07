@@ -9,7 +9,7 @@ handlers:
   static_dir: web/css
 
 - url: /js
-  static_dir: web/fonts
+  static_dir: web/js
 
 - url: /lib
   static_dir: web/lib
