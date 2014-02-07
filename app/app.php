@@ -59,7 +59,7 @@ $app->get('/example/unstable', function () use ($app) {
     ));
 });
 
-$app->get('/presentation', function () use ($app) {
+$app->get('/', function () use ($app) {
     return $app['twig']->render('presentation.html.twig');
 });
 
