@@ -58,3 +58,7 @@
     color: red;
     font-weight: bold;
 }
+
+.reveal code {
+	font-family: "Droid Sans Mono"
+}
