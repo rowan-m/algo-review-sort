@@ -8,6 +8,9 @@ handlers:
 - url: /css
   static_dir: web/css
 
+- url: /image
+  static_dir: web/image
+
 - url: /js
   static_dir: web/js
 
